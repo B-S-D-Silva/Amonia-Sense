@@ -1,6 +1,6 @@
-create database pi;
+create database amonia_sense;
 
-use pi;
+use amonia_sense;
 
 -- -----------------------------------------------------------------
 
@@ -9,7 +9,10 @@ idLocal INT PRIMARY KEY AUTO_INCREMENT,
 nomeLocal VARCHAR(100) NOT NULL,
 cidade VARCHAR(50),
 cep CHAR(8),
-responsavelLocal VARCHAR(50)
+fkResponsavel int unique,
+constraint fkResponsavelLocal
+foreign key (fkResponsavel)
+references Responsavel (idResponsavel)
 );
 
 INSERT INTO Locais (nomeLocal, cidade, cep, responsavelLocal) VALUES
@@ -19,21 +22,6 @@ INSERT INTO Locais (nomeLocal, cidade, cep, responsavelLocal) VALUES
 ('Fazenda Novos Ares', 'Uberlândia', '14010200', 'Roberto Almeida');
 
 SELECT * FROM Locais;
-
-UPDATE Locais SET responsavelLocal = 'José Fernando' WHERE idLocal = 2;
-
-UPDATE Locais SET cep = '30120010' WHERE idLocal = 3;
-
-ALTER TABLE Locais ADD COLUMN statusOperacao TINYINT DEFAULT 1;
-
-ALTER TABLE Locais MODIFY COLUMN responsavelLocal VARCHAR(80);
-
-ALTER TABLE Locais ADD COLUMN ColunaTeste VARCHAR(10);
-ALTER TABLE Locais DROP COLUMN ColunaTeste;
-
-DELETE FROM Locais WHERE idLocal = 4;
-
-UPDATE Locais SET statusOperacao = 0 WHERE idLocal = 3;
 
 SELECT CONCAT(
     'Frigorífico: ', nomeLocal, 
@@ -50,17 +38,20 @@ FROM Locais;
 
 -- -------------------------------------------------------------------------------------
 
-CREATE TABLE Usuarios (
-idUsers INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE Responsavel (
+idResponsavel INT PRIMARY KEY AUTO_INCREMENT,
 nomeCompleto VARCHAR(100) NOT NULL,
 email VARCHAR(100) UNIQUE NOT NULL,
 dataNascimento DATE,
-locais VARCHAR(100) NOT NULL,
 senha VARCHAR(255), 
 dtAquisicao DATETIME DEFAULT CURRENT_TIMESTAMP,
 cpf CHAR(11) NOT NULL UNIQUE,
 statusConta TINYINT DEFAULT 1,
-CONSTRAINT chkEmail CHECK (email LIKE '%@%')
+CONSTRAINT chkEmail CHECK (email LIKE '%@%'),
+fkLocal int unique,
+constraint fkLocalResponsavel
+foreign key (fkLocal)
+references Local (idLocal)
 );
 
 DESCRIBE Usuarios;
@@ -73,35 +64,15 @@ INSERT INTO Usuarios (nomeCompleto, email, dataNascimento, senha, cpf, locais) V
 
 SELECT * FROM Usuarios;
 
-UPDATE Usuarios SET senha = 'Estou protegido' WHERE idUsers = 2;
-
-UPDATE Usuarios SET senha = 'Senhas iguais' WHERE idUsers IN(3,4);
-
-ALTER TABLE Usuarios RENAME COLUMN nomeCompleto TO Nome;
-
-ALTER TABLE Usuarios MODIFY COLUMN Nome VARCHAR(150);
-
-ALTER TABLE Usuarios ADD COLUMN Teste VARCHAR(10);
-
-ALTER TABLE Usuarios DROP COLUMN Teste;
-
-ALTER TABLE Usuarios ADD CONSTRAINT chkNome CHECK (Nome LIKE '% %');
-
-DELETE FROM Usuarios WHERE idUsers = 4;
-
 SELECT CONCAT('Nome do usuario: ',Nome,' | Email: ',email,' | cpf: ',IFNULL(cpf, '(Sem CPF cadastrado)')) AS 'Descrição' FROM Usuarios;
 
 SELECT Nome,TIMESTAMPDIFF(YEAR,dataNascimento,now()) AS 'IDADE DO USUARIO' FROM Usuarios;
-
-UPDATE Usuarios SET statusConta = 0 WHERE idUsers = 3;
 
 SELECT CONCAT('Nome do usuario: ',Nome,' | Email: ',email,' | cpf: ',IFNULL(cpf, '(Sem CPF cadastrado)'),' | Status da Conta: ',
 CASE 
 WHEN statusConta = 1 THEN 'Ativo'
 ELSE 'Desativado'
 END) AS 'Descrição' FROM Usuarios;
-
-TRUNCATE TABLE Usuarios;
 
 -- -------------------------------------------------------------------------------------
 
