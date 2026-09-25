@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body class="login_body">
+    <div class="fundoLoginECadastro"></div>
+    <header>
+        <div class="header">
+
+            <div class="logo">
+                <img onclick="window.location.href='http:index.html'" src="./LogoAmonia.png">
+            </div>
+
+            <div class="botoes">
+                <button class="nav_botao" onclick="window.location.href='http:index.html'">Página inicial</button>
+            </div>
+
+        </div>
+
+    </header>
+    
+    <div class="login_box">
+        <div class="login_container">
+
+        <h2>Email</h2>
+
+        <input type="text" placeholder="Usuário" id="input_login">
+        <input type="password" placeholder="Senha" id="input_senha">
+
+        <button class="btn_entrar" onclick="Entrar()">Entrar</button>
+        <button class="btn_cadastro" onclick="window.location.href='http:paginadecadastro.html'">Criar conta</button>
+
+        <div id="div_mensagem"></div>
+
+    </div>
+    </div>
+
+
+    <script>
+
+        function Entrar() {
+            let login = input_login.value
+            let senha = input_senha.value
+
+            if (login == 'Kaua@gmail.com' && senha == '123') {
+
+                window.location.href = "http:dash.html"
+
+            } else {
+                div_mensagem.innerHTML = `Usuario Invalido`
+            }
+
+
+        }
+
+
+    </script>
+
+</body>

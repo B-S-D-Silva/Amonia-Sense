@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body class="login_body">
+    <div class="fundoLoginECadastro"></div>
+    <header>
+        <div class="header">
+
+            <div class="logo">
+                <a href=""><img onclick="window.location.href='http:index.html'" src="./LogoAmonia.png"></a>
+            </div>
+
+            <div class="botoes">
+                <button class="nav_botao" onclick="window.location.href='http:index.html'">Página inicial</button>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <div class="login_box">
+
+        <div class="login_container" id="login_container"></div>
+
+    </div>
+
+    <script>
+        let container = ` <h2> Insira um email</h2>
+
+            <input type="text" placeholder="Usuário" id="input_cadastro">
+
+            <h2> Insira uma senha</h2>
+
+            <input type="text" placeholder="Senha" id="input_criesenha">
+
+            <input type="password" placeholder="Repita Senha" id="input_repita">
+
+            <button class="btn_entrar" onclick="Criar()">Criar</button>
+                <b style="color: red;"></b>
+            <div id="div_mensagem"></div>`
+
+            login_container.innerHTML = container
+
+         function irLogin() {
+
+         window.location.href = "http:paginaLogin.html";
+        
+         }
+        function Criar() {
+
+            let email = input_cadastro.value
+            let senha = input_criesenha.value
+            let repita = input_repita.value
+
+
+
+            if (email == '') {
+                div_mensagem.innerHTML = `<b style="color: red;">Insira um email</b>`
+            } else if (senha == '') {
+                div_mensagem.innerHTML = `<b style="color: red;">Insira uma senha</b>`
+            } else if (senha == senha.toLowerCase()) {
+                div_mensagem.innerHTML = `<b style="color: red;">A senha deve conter letras maiusculas</b>`
+            } else if (senha == senha.toUpperCase()) {
+                div_mensagem.innerHTML = `<b style="color: red;">A senha deve conter letras minusculas</b>`
+            } else if (senha.length < 8) {
+                div_mensagem.innerHTML = `<b style="color: red;">A senha deve conter mais de 7 caracteres</b>`
+            } else if (repita != senha) {
+                div_mensagem.innerHTML = `<b style="color: red;">Senha não está igual</b> `
+            } else if (!email.endsWith('.com') && !email.includes('@')) {
+                div_mensagem.innerHTML = `<b style="color: red;">Insira um email válido</b>`
+            } else {
+                container = `<p>Seu usuário foi criado ✅</p>
+            <button class="btn_entrar" onclick="irLogin()">Ir para login</button>`
+            login_container.innerHTML = container
+            } 
+        
+         
+        }
+
+
+    </script>

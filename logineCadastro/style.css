@@ -1,0 +1,186 @@
+.login_body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+    color: #1f2937;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fundoLoginECadastro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    z-index: -1;
+}
+
+.login_body header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    margin: 0;
+    z-index: 5;
+}
+
+.login_body .header {
+    width: 100%;
+    height: 70px;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.login_body .logo {
+    display: none;
+}
+
+.login_body .botoes {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+}
+
+.login_body .nav_botao {
+    width: 36px;
+    height: 36px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #1f2937;
+    border-radius: 50%;
+    background-color: white;
+    font-size: 0;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.login_body .nav_botao::after {
+    content: "<";
+    font-size: 28px;
+    font-weight: bold;
+    color: #1f2937;
+}
+
+.login_box {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login_container {
+    width: 395px;
+    padding: 42px;
+    box-sizing: border-box;
+    background-color: white;
+    border: 1px solid #cfc8bf;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    text-align: left;
+}
+
+.login_container::before {
+    content: "";
+    width: 120px;
+    height: 60px;
+    margin: 0 auto 10px auto;
+    background-image: url("./LogoAmonia.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.login_container h2 {
+    margin: 10px 0 7px 0;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #1f2937;
+    letter-spacing: 0.5px;
+}
+
+.login_container input {
+    width: 100%;
+    height: 38px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    padding: 0 13px;
+    border: 1px solid #c9c3bb;
+    border-radius: 6px;
+    background-color: white;
+    color: #1f2937;
+    font-size: 14px;
+    outline: none;
+}
+
+.login_container input::placeholder {
+    color: #77736e;
+}
+
+.login_container input:focus {
+    border: 1px solid #477ca5;
+}
+
+.btn_entrar {
+    width: 100%;
+    height: 36px;
+    margin-top: 17px;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    background-color: #477ca5;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.btn_cadastro {
+    width: 100%;
+    margin-top: 15px;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: #477ca5;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+#div_mensagem {
+    width: 100%;
+    margin-top: 12px;
+    text-align: center;
+    font-size: 13px;
+}
+
+@media (max-width: 600px) {
+
+    .login_body {
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .login_container img {
+    width: 100px;
+    height: auto;
+    margin: 0 auto 20px auto;
+    display: block;
+}
+
+    .login_body .botoes {
+        left: 15px;
+        top: 15px;
+    }
+}
