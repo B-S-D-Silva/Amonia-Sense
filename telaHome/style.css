@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.fundoIntro{
+    background-image: url(../telaHome/imagens/Fundo1.png);
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 700px;
+} 
+
+.intro{
+    color: white;
+    text-align: center;
+    padding-right: 75%;
+}
+
+.titulo{
+    color: white;
+    text-align: center;
+    padding-right: 90%;
+}
+
+.subtitulo{
+    color: white;
+    text-align: center;
+    padding-right: 75%;
+}
+
+.botoes{
+    color: white;
+    text-align: center;
+    padding-right: 75%;
+}
