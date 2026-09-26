@@ -28,6 +28,7 @@
     background-image: url(imagens/Firefly_Gemini\ Flash\ -\ Editado.png);
     width: 100%;
     height: 600px;
+    opacity: 0.9;
 }
 
 .fundoIntro{
@@ -39,21 +40,26 @@
     display: flex;
     color: white;
     text-align: center;
-    padding-right: 75%;
+    margin-right: 1450px;
     position: relative;
     top: 80px;
-    text-align: justify;
-
+    display: inline-block;
+    background-color: #014c96;  /* Azul escuro */
+    color: #ffffff;
+    padding: 10px 15px;
+    margin-top: 10px;
 }
 
 .titulo{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     display: flex;
     color: white;
-    flex-direction: column; 
+    justify-content: center;
     text-align: justify;
     position: relative;
     top: 100px;
-    font-size: 40px;
+    font-size: 60px;
+    margin-right: 1000px;
 }
 
 .subtitulo{
@@ -61,14 +67,23 @@
     padding-right: 75%;
     color: white;
     position: relative;
-    top:100px;
-
+    top: 120px;
+    opacity: 0.9;
+    justify-content: center;
+    margin-left: 80px;
+    font-size: 20px;
 }
 
 .botoes{
-    text-align: justify;
+    display: flex;
     color: white;
-    padding-right: 75%;
+    text-align: center;
+    margin-right: 1200px;
     position: relative;
-    top: 100px;
+    top: 120px;
+    display: inline-block;
+    background-color: #014c96;  /* Azul escuro */
+    color: #ffffff;
+    padding: 10px 15px;
+    margin-top: 10px;
 }
