@@ -69,6 +69,18 @@
                 placeholder="Digite seu email"
                 id="input_cadastro">
 
+            <h2>DATA DE NASCIMENTO</h2>
+
+            <input
+                type="date"
+                id="input_nascimento">
+
+            <h2>CPF OU NÚMERO DO PASSAPORTE</h2>
+
+            <input
+                type="text"
+                placeholder="Digite seu CPF ou passaporte"
+                id="input_documento">
 
             <h2>SENHA</h2>
 
@@ -129,6 +141,8 @@
         function Criar() {
 
             let email = input_cadastro.value
+            let dataNascimento = input_nascimento.value
+            let documento = input_documento.value
             let senha = input_criesenha.value
             let repita = input_repita.value
 
@@ -137,6 +151,16 @@
 
                 div_mensagem.innerHTML =
                     `<b style="color: red;">Insira um email</b>`
+
+            } else if (dataNascimento == '') {
+
+                div_mensagem.innerHTML =
+                    `<b style="color: red;">Insira sua data de nascimento</b>`
+
+            } else if (documento == '') {
+
+                div_mensagem.innerHTML =
+                    `<b style="color: red;">Insira seu CPF ou passaporte</b>`
 
             } else if (senha == '') {
 
