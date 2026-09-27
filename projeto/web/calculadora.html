@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AmoniaSense - Dashboard Financeiro</title>
+    <link rel="stylesheet" href="css/style-calculadora.css">
+    <script src="js/calculadora.js"></script>
+</head>
+<body>
+
+    <h1>AMONIA SENSE: SIMULADOR FINANCEIRO</h1>
+    <span>
+        <i>Esta ferramenta reúne simulações financeiras relacionadas ao risco de vazamento de amônia
+        na sala de desossa do frigorífico e ao investimento necessário para preveni-lo com o sistema
+        de monitoramento AmoniaSense. </i><br><br>
+        <b>Preencha os campos de cada bloco e clique no botão correspondente para visualizar o resultado.</b>
+    </span>
+
+    <hr>
+
+    <div>
+        <h2>1. Prejuízo Direto de um Acidente (Paralisação)</h2>
+        <span>
+            <i>Estime o prejuízo imediato causado por um único vazamento que paralisa a produção.</i>
+        </span><br><br>
+
+        <label>Qual a capacidade diária de carcaças bovinas?</label> <br>
+        <input value="3000" placeholder="Ex: 3000" type="number" id="input_capacidade"/>
+        <span class="subtitulo"><i>(Peso médio: 267,3kg)</i></span> <br><br>
+
+        <label>Quantas horas por dia a desossa funciona?</label><br>
+        <input value="24" placeholder="Ex: 24" type="number" id="input_funcionamento" /><br><br>
+
+        <label>Qual o custo médio da carne por kg? (R$)</label> <br>
+        <input value="23.00" placeholder="Ex: 23.00" type="number" id="input_custokg"/><br><br>
+
+        <label>Qual a quantidade de funcionários no setor?</label><br>
+        <input value="300" type="number" id="ipt_Funcionarios"><br><br>
+
+        <label>Qual o valor médio da hora do funcionário? (R$)</label><br>
+        <input value="13.00" type="number" id="ipt_HoraFuncionario"><br><br>
+
+        <button onclick="exibirHora()" class="btn-secundario">Informar tempo em Horas</button>
+        <button onclick="exibirMinutos()">Informar tempo em Minutos</button><br><br>
+
+        <div id="tempo">
+            <label>Tempo de paralisação causado pelo vazamento (minutos):</label> <br>
+            <input value="30" placeholder="Ex: 60" type="number" id="input_minutos"><br><br>
+        </div>
+
+        <button onclick="calcularIncidente()" class="btn-calcular">Calcular Prejuízo do Acidente</button><br><br>
+
+        <div id="div_msgIncidente"></div>
+    </div>
+
+    <hr>
+
+    <div>
+
+    </div>
+
+    <hr>
+
+    <div>
+        <h2>2. Passivo Trabalhista Oculto (NR-15)</h2>
+        <span>
+            <i>Estime o valor do adicional de insalubridade devido aos funcionários expostos à amônia sem monitoramento.</i>
+        </span><br><br>
+
+        <label for="input_numeroFuncionarios">Número de funcionários expostos na sala de desossa:</label> <br>
+        <input value="300" placeholder="Ex: 300" type="number" id="input_numeroFuncionarios"><br><br>
+
+        <label for="input_mesesExpo">Há quantos meses essa exposição ocorre sem monitoramento?</label> <br>
+        <input value="20" placeholder="Ex: 18" type="number" id="input_mesesExpo"><br>
+        <span class="subtitulo"><i>*A legislação permite cobrança retroativa de no máximo 5 anos (60 meses).</i></span><br><br>
+
+        <button onclick="calcularTrabalhista()" class="btn-calcular">Calcular Passivo Trabalhista</button><br><br>
+
+        <div id="div_msgTrabalhista"></div>
+        <h2>3. Custo de Implantação (AmoniaSense)</h2>
+        <span>
+            <i>Estime o investimento necessário para instalar o sistema de monitoramento na sala de desossa.</i>
+        </span><br><br>
+
+        <label for="input_evaporadores">Número de evaporadores na sala de desossa:</label> <br>
+        <input value="8" placeholder="Ex: 8" type="number" id="input_evaporadores"><br><br>
+
+        <label for="input_sensores">Número de sensores MQ-2 por evaporador:</label> <br>
+        <input value="2" placeholder="Ex: 2" type="number" id="input_sensores"><br><br>
+
+        <button onclick="calcularHardware()" class="btn-calcular">Calcular Custo do Sistema</button><br><br>
+
+        <div id="div_msgHardware"></div>
+    </div>
+
+</body>
+</html>

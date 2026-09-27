@@ -75,7 +75,7 @@ let container = `
     ">
         Já possui uma conta?
         <a
-            href="http:paginaLogin.html"
+            href="pagina-login.html"
             style="
                 color: #477ca5;
                 font-weight: bold;
@@ -90,7 +90,7 @@ login_container.innerHTML = container
 
 function irLogin() {
 
-    window.location.href = "http:paginaLogin.html";
+    window.location.href = "pagina-login.html";
 
 }
 

@@ -15,7 +15,7 @@
 /* .imagem {
     background-image: 
     linear-gradient(rgba(26, 42, 58, 0.6), rgba(26, 42, 58, 0.6)),
-    url(../telaHome/imagens/fundo1.png);
+    url(../img/fundo-1.png);
 
     background-size: cover;
     background-position: center;
@@ -25,7 +25,7 @@
 }  */
 
 .imagem {
-    background-image: url("../img/Firefly_Gemini Flash - Editado.png");
+    background-image: url("../img/firefly-gemini-flash-editado.png");
     width: 100%;
     height: 600px;
     opacity: 0.9;
