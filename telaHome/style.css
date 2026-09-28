@@ -29,17 +29,25 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #EAF5FF;
+    background: rgba(20, 36, 52, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 999px;
-    box-shadow: 0 6px 18px rgba(31, 61, 36, 0.12);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(8px);
 }
 
 .brand {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #2f6fb3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    letter-spacing: 0.04em;
+}
+
+.brand-logo {
+    height: 34px;
+    width: auto;
+    display: block;
+    filter: brightness(0) invert(1);
 }
 
 .nav-links {
@@ -50,7 +58,7 @@ body {
 
 .nav-links a {
     text-decoration: none;
-    color: #2f6fb3;
+    color: #ffffff;
     font-weight: 600;
     font-size: 0.96rem;
 }
