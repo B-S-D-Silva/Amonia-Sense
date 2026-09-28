@@ -1,41 +1,69 @@
+-- Recria o banco do zero (evita erros de tabelas criadas pela metade)
+DROP DATABASE IF EXISTS amonia_sense;
 CREATE DATABASE amonia_sense;
 USE amonia_sense;
 
+-- =========================================================
+-- RESPONSAVEL (precisa vir antes de Locais, Incidente e empresa)
+-- =========================================================
 CREATE TABLE Responsavel (
     idResponsavel INT PRIMARY KEY AUTO_INCREMENT,
     nomeCompleto VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    telefone VARCHAR(15),
+    cpf CHAR(11) UNIQUE,
+    CONSTRAINT chkEmailResp CHECK (email LIKE '%@%')
+);
+
+INSERT INTO Responsavel (nomeCompleto, email, telefone, cpf) VALUES
+('Carlos Eduardo Lima', 'carlos.lima@gmail.com', '11987654321', '12345678901'),
+('Mariana Souza', 'mariana.souza@gmail.com', '11912345678', '23456789012'),
+('Roberto Alves', 'roberto.alves@gmail.com', '21998765432', '34567890123'),
+('Fernanda Costa', 'fernanda.costa@gmail.com', '34991234567', '45678901234');
+
+SELECT * FROM Responsavel;
+
+-- =========================================================
+-- USUARIO
+-- =========================================================
+CREATE TABLE Usuario (
+    idUsuario INT PRIMARY KEY AUTO_INCREMENT,
+    nomeCompleto VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     dataNascimento DATE,
-    senha VARCHAR(255), 
+    senha VARCHAR(255),
     dtAquisicao DATETIME DEFAULT CURRENT_TIMESTAMP,
     cpf CHAR(11) NOT NULL UNIQUE,
     statusConta TINYINT DEFAULT 1,
     CONSTRAINT chkEmail CHECK (email LIKE '%@%')
 );
 
-DESCRIBE Responsavel;
+DESCRIBE Usuario;
 
-INSERT INTO Responsavel (nomeCompleto, email, dataNascimento, senha, cpf) VALUES
+INSERT INTO Usuario (nomeCompleto, email, dataNascimento, senha, cpf) VALUES
 ('José Fernando da Silva', 'jose@gmail.com', '1978-02-20', 'Senha segura 123', '54896275614'),
 ('Pedro Afonso dos Santos', 'pedro.afo@gmail.com', '2000-04-10', 'Senha segura 123', '36794201984'),
 ('Guilherme dos Campos', 'gui.campos@gmail.com', '1990-10-29', 'Senha segura 123', '87925643102'),
 ('Julia Miranda', 'julia.miranda@gmail.com', '1988-07-25', 'Senha segura 123', '14975236849');
 
-SELECT * FROM Responsavel;
+SELECT * FROM Usuario;
 
-SELECT CONCAT('Nome do usuário: ', nomeCompleto, ' | Email: ', email, ' | CPF: ', IFNULL(cpf, '(Sem CPF cadastrado)')) AS 'Descrição' 
-FROM Responsavel;
+SELECT CONCAT('Nome do usuário: ', nomeCompleto, ' | Email: ', email, ' | CPF: ', IFNULL(cpf, '(Sem CPF cadastrado)')) AS 'Descrição'
+FROM Usuario;
 
-SELECT nomeCompleto, TIMESTAMPDIFF(YEAR, dataNascimento, NOW()) AS 'IDADE DO USUÁRIO' 
-FROM Responsavel;
+SELECT nomeCompleto, TIMESTAMPDIFF(YEAR, dataNascimento, NOW()) AS 'IDADE DO USUÁRIO'
+FROM Usuario;
 
 SELECT CONCAT('Nome do usuário: ', nomeCompleto, ' | Email: ', email, ' | CPF: ', IFNULL(cpf, '(Sem CPF cadastrado)'), ' | Status da Conta: ',
-    CASE 
+    CASE
         WHEN statusConta = 1 THEN 'Ativo'
         ELSE 'Desativado'
-    END) AS 'Descrição' 
-FROM Responsavel;
+    END) AS 'Descrição'
+FROM Usuario;
 
+-- =========================================================
+-- LOCAIS
+-- =========================================================
 CREATE TABLE Locais (
     idLocal INT PRIMARY KEY AUTO_INCREMENT,
     nomeLocal VARCHAR(100) NOT NULL,
@@ -55,19 +83,22 @@ INSERT INTO Locais (nomeLocal, cidade, cep, fkResponsavel) VALUES
 SELECT * FROM Locais;
 
 SELECT CONCAT(
-    'Frigorífico: ', L.nomeLocal, 
-    ' | Cidade: ', IFNULL(L.cidade, 'Não informada'), 
-    ' | CEP: ', IFNULL(L.cep, 'CEP Pendente'), 
+    'Frigorífico: ', L.nomeLocal,
+    ' | Cidade: ', IFNULL(L.cidade, 'Não informada'),
+    ' | CEP: ', IFNULL(L.cep, 'CEP Pendente'),
     ' | Gerente: ', IFNULL(R.nomeCompleto, 'Aguardando contratação'),
-    ' | Status: ', 
-    CASE 
+    ' | Status: ',
+    CASE
         WHEN L.statusOperacao = 1 THEN 'Ativo'
         ELSE 'Desativado'
     END
-) AS 'Relatório de Unidades' 
+) AS 'Relatório de Unidades'
 FROM Locais L
 LEFT JOIN Responsavel R ON L.fkResponsavel = R.idResponsavel;
 
+-- =========================================================
+-- SENSOR
+-- =========================================================
 CREATE TABLE Sensor (
     idSensor INT PRIMARY KEY AUTO_INCREMENT,
     identificarSensor VARCHAR(50) NOT NULL,
@@ -75,14 +106,14 @@ CREATE TABLE Sensor (
     concentracaoValor INT NOT NULL,
     dataHoraLeitura DATETIME DEFAULT CURRENT_TIMESTAMP,
     statusSensor VARCHAR(20) DEFAULT 'ATIVO',
-    fkLocal INT, 
+    fkLocal INT,
     CONSTRAINT fkSensorLocal FOREIGN KEY (fkLocal) REFERENCES Locais(idLocal),
     CONSTRAINT chk_sensor_status CHECK (statusSensor IN ('ATIVO', 'MANUTENCAO', 'INATIVO')),
     CONSTRAINT chkconcentracaoValor CHECK (concentracaoValor >= 0 AND concentracaoValor <= 1023),
     CONSTRAINT chkStatusVazamento CHECK (statusVazamento IN ('Normal', 'Alerta', 'Evacuação'))
 );
 
-INSERT INTO Sensor (identificarSensor, fkLocal, concentracaoValor) VALUES 
+INSERT INTO Sensor (identificarSensor, fkLocal, concentracaoValor) VALUES
 ('MQ-2', 1, 200),
 ('MQ-2', 2, 400),
 ('MQ-2', 3, 300),
@@ -98,31 +129,39 @@ SELECT CONCAT('SENSOR UTILIZADO: ', identificarSensor, ' | CONCENTRAÇÃO DO VAL
     END) AS 'STATUS DA OPERAÇÃO'
 FROM Sensor;
 
+-- =========================================================
+-- INCIDENTE (com gravidade de 1 a 3)
+-- Escala: 1 = Atenção | 2 = Perigo | 3 = Risco de Morte
+-- =========================================================
 CREATE TABLE Incidente (
     idIncidente INT PRIMARY KEY AUTO_INCREMENT,
     fkSensor INT NOT NULL,
     responsavelLocal INT,
     nivelDePerigo VARCHAR(20) NOT NULL,
+    gravidade TINYINT NOT NULL,
     acaoTomada VARCHAR(150),
     dataAlerta DATETIME DEFAULT CURRENT_TIMESTAMP,
     dataResolucao DATETIME,
     statusIncidente VARCHAR(20) DEFAULT 'Aberto',
     CONSTRAINT fkIncidenteSensor FOREIGN KEY (fkSensor) REFERENCES Sensor(idSensor),
+    CONSTRAINT fkIncidenteResp FOREIGN KEY (responsavelLocal) REFERENCES Responsavel(idResponsavel),
     CONSTRAINT chkStatusIncidente CHECK (statusIncidente IN ('Aberto', 'Em Atendimento', 'Resolvido')),
-    CONSTRAINT chkNivelDePerigo CHECK (nivelDePerigo IN ('Atenção', 'Perigo', 'Risco de Morte'))
+    CONSTRAINT chkNivelDePerigo CHECK (nivelDePerigo IN ('Atenção', 'Perigo', 'Risco de Morte')),
+    CONSTRAINT chkGravidade CHECK (gravidade IN (1, 2, 3))
 );
 
-INSERT INTO Incidente (fkSensor, responsavelLocal, nivelDePerigo, acaoTomada, dataResolucao, statusIncidente) VALUES 
-(2, 1, 'Perigo', 'Ventilação ativada manualmente e local evacuado', '2026-09-04 10:30:00', 'Resolvido'),
-(3, NULL, 'Atenção', NULL, NULL, 'Aberto'),
-(4, 2, 'Risco de Morte', 'Isolamento da área e acionamento dos bombeiros', NULL, 'Em Atendimento'),
-(2, NULL, 'Atenção', NULL, NULL, 'Aberto');
+INSERT INTO Incidente (fkSensor, responsavelLocal, nivelDePerigo, gravidade, acaoTomada, dataResolucao, statusIncidente) VALUES
+(2, 1, 'Perigo', 2, 'Ventilação ativada manualmente e local evacuado', '2026-09-04 10:30:00', 'Resolvido'),
+(3, NULL, 'Atenção', 1, NULL, NULL, 'Aberto'),
+(4, 2, 'Risco de Morte', 3, 'Isolamento da área e acionamento dos bombeiros', NULL, 'Em Atendimento'),
+(2, NULL, 'Atenção', 1, NULL, NULL, 'Aberto');
 
 SELECT * FROM Incidente;
 
-SELECT 
+SELECT
     CONCAT('Alerta no Sensor ID: ', fkSensor,
             ' | Nível: ', nivelDePerigo,
+            ' | Gravidade: ', gravidade,
             ' | Técnico: ', IFNULL(responsavelLocal, '(Aguardando)'),
             ' | Ação: ', IFNULL(acaoTomada, '(Nenhuma ação registrada)'),
             ' | Status da Ocorrência: ',
@@ -133,12 +172,16 @@ SELECT
             END) AS 'Painel de Monitoramento'
 FROM Incidente;
 
-SELECT idIncidente, nivelDePerigo, 
+SELECT idIncidente, nivelDePerigo, gravidade,
     DATE_FORMAT(dataAlerta, '%d/%m/%Y %H:%i') AS 'Data do Alerta',
     TIMESTAMPDIFF(HOUR, dataAlerta, NOW()) AS 'Horas desde o disparo'
 FROM Incidente
-WHERE statusIncidente != 'Resolvido';
+WHERE statusIncidente != 'Resolvido'
+ORDER BY gravidade DESC;
 
+-- =========================================================
+-- EMPRESA
+-- =========================================================
 CREATE TABLE empresa (
     idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
@@ -153,22 +196,22 @@ CREATE TABLE empresa (
     CONSTRAINT checkPagamento CHECK(status_pagamento IN(0, 1))
 );
 
-INSERT INTO empresa (nome, cnpj, status_contrato, data_pagamento, status_pagamento) VALUES 
+INSERT INTO empresa (nome, cnpj, status_contrato, data_pagamento, status_pagamento) VALUES
 ('Frigorífico Boi Gordo S.A.', '12345678000199', 'Ativo', '2026-09-05', 1),
-('Carnes Premium Exportação Ltda', '98765432000188', 'Ativo', NULL, 0), 
+('Carnes Premium Exportação Ltda', '98765432000188', 'Ativo', NULL, 0),
 ('Abatedouro Vale do Sol', '11122233000177', 'Cancelado', '2025-12-10', 1);
 
 SELECT * FROM empresa;
 
 SELECT CONCAT(
-    ' Cliente: ', nome, 
-    ' | CNPJ: ', cnpj, 
-    ' | Contrato: ', status_contrato, 
-    ' | Situação Financeira: ', 
-    CASE 
+    ' Cliente: ', nome,
+    ' | CNPJ: ', cnpj,
+    ' | Contrato: ', status_contrato,
+    ' | Situação Financeira: ',
+    CASE
         WHEN status_pagamento = 1 THEN 'Pagamento em Dia'
         ELSE 'Inadimplente (Bloquear Sistema)'
     END,
     ' | Último Pagamento: ', IFNULL(DATE_FORMAT(data_pagamento, '%d/%m/%Y %H:%i'), 'Nenhum pagamento registrado')
-) AS 'Dashboard Financeiro' 
+) AS 'Dashboard Financeiro'
 FROM empresa;
