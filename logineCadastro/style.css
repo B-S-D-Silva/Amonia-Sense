@@ -36,10 +36,10 @@ a {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(20, 36, 52, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: #1b3d59;
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 999px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 10px 25px rgba(17, 47, 71, 0.22);
     backdrop-filter: blur(8px);
 }
 
