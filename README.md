@@ -9,10 +9,10 @@ A solução realiza a leitura de dados por meio do sensor MQ-2 conectado a um mi
 ## Estrutura do Repositório
 
 ```plaintext
-├── arduino/       # Código C/C++ (.ino) para microcontrolador e sensor MQ-2
-├── backend/       # Tratamento dos dados e integração com MySQL
-├── frontend/      # Painel web (HTML, CSS, JavaScript) com gráficos de monitorização
-└── documentacao/  # Documentos do projeto (contexto, escopo, premissas e restrições)
+├─ arduino/      # Código C/C++ (.ino) para microcontrolador e sensor MQ-2
+├─ backend/      # Tratamento dos dados e integração com MySQL
+├─ frontend/     # Painel web (HTML, CSS, JavaScript) com gráficos de monitorização
+└─ documentacao/ # Documentos do projeto (contexto, escopo, premissas e restrições)
 ```
 
 ## Tecnologias Utilizadas
@@ -45,6 +45,20 @@ Abra o terminal (Git Bash, Prompt de Comando ou PowerShell) e execute:
 git clone [https://github.com/SEU_USUARIO/SEU_REPOSITORIO.git](https://github.com/SEU_USUARIO/SEU_REPOSITORIO.git)
 cd SEU_REPOSITORIO
 ```
+#### 2. Configurar o Banco de Dados (MySQL)
+Execute o script de criação das tabelas localizado na pasto do projeto:
+``` SQL
+-- Execute o arquivo .sql presente na pasta backend/ ou documentacao;
+```
+#### 3. Configurar e rodar o Arduino
+- Abra o Arduino IDE.
+- Conecte o microcontrolador via USB.
+- Abra o arquivo .ino localizado em arduino/.
+- Selecione a porta COM correspondente e clique em Carregar (Upload).
+
+#### 4. Execute a Interface Web (Frontend)
+- Acesse a pasta frontend/.
+- Dê dois cliques no arquivo index.html para abrir diretamente no navegador
 
 ## Instituição
 São Paulo Tech School  
