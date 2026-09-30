@@ -10,56 +10,31 @@ CREATE TABLE cliente (
     idCliente INT PRIMARY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     documento VARCHAR(40) NOT NULL,
-    email VARCHAR(100) UNIQUE,
-    telefone VARCHAR(20),
-    constraint chkEmailResp check (email LIKE '%@%')
-);
-
-INSERT INTO Cliente (nome, documento, email, telefone) VALUES
-('Carlos Eduardo Lima', '12345678901', 'carlos.lima@gmail.com', '11987654321',),
-('Mariana Souza', '11912345678', '23456789012', 'mariana.souza@gmail.com',),
-('Roberto Alves', 'roberto.alves@gmail.com', '21998765432', '34567890123'),
-('Fernanda Costa', 'fernanda.costa@gmail.com', '34991234567', '45678901234');
-
-SELECT * FROM Cliente;
-
--- =========================================================
--- USUARIO
--- =========================================================
-CREATE TABLE Usuario (
-    idUsuario INT PRIMARY KEY AUTO_INCREMENT,
-    nomeCompleto VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
-    dataNascimento DATE,
-    senha VARCHAR(255),
-    dtAquisicao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    cpf CHAR(11) NOT NULL UNIQUE,
-    statusConta TINYINT DEFAULT 1,
-    CONSTRAINT chkEmail CHECK (email LIKE '%@%')
+    telefone VARCHAR(20),
+    dtNasc DATE NOT NULL,
+    senha VARCHAR(60) NOT NULL,
+    CONSTRAINT chkEmailResp CHECK (email LIKE '%@%')
 );
 
-DESCRIBE Usuario;
+INSERT INTO cliente (nome, documento, email, telefone, dtNasc, senha) VALUES
+('Carlos Eduardo Lima', '12345678901', 'carlos.lima@gmail.com', '11987654321', '1978-02-20', 'Senha segura 123'),
+('Mariana Souza', '23456789012', 'mariana.souza@gmail.com', '11912345678', '2000-04-10', 'Senha segura 123'),
+('Roberto Alves', '21998765432', 'roberto.alves@gmail.com', '34567890123', '1990-10-29', 'Senha segura 123'),
+('Fernanda Costa', '34991234567', 'fernanda.costa@gmail.com', '45678901234', '1988-07-25', 'Senha segura 123');
 
-INSERT INTO Usuario (nomeCompleto, email, dataNascimento, senha, cpf) VALUES
-('José Fernando da Silva', 'jose@gmail.com', '1978-02-20', 'Senha segura 123', '54896275614'),
-('Pedro Afonso dos Santos', 'pedro.afo@gmail.com', '2000-04-10', 'Senha segura 123', '36794201984'),
-('Guilherme dos Campos', 'gui.campos@gmail.com', '1990-10-29', 'Senha segura 123', '87925643102'),
-('Julia Miranda', 'julia.miranda@gmail.com', '1988-07-25', 'Senha segura 123', '14975236849');
+SELECT * FROM cliente;
 
-SELECT * FROM Usuario;
+DESCRIBE cliente;
 
-SELECT CONCAT('Nome do usuário: ', nomeCompleto, ' | Email: ', email, ' | CPF: ', IFNULL(cpf, '(Sem CPF cadastrado)')) AS 'Descrição'
-FROM Usuario;
+SELECT CONCAT('Nome do usuário: ', nome, ' | Email: ', email, ' | Documento: ', IFNULL(Documento, '(Sem Documento cadastrado)')) AS 'Descrição'
+FROM cliente;
 
-SELECT nomeCompleto, TIMESTAMPDIFF(YEAR, dataNascimento, NOW()) AS 'IDADE DO USUÁRIO'
-FROM Usuario;
+SELECT nome, TIMESTAMPDIFF(YEAR, dtNasc, NOW()) AS 'IDADE DO USUÁRIO'
+FROM cliente;
 
-SELECT CONCAT('Nome do usuário: ', nomeCompleto, ' | Email: ', email, ' | CPF: ', IFNULL(cpf, '(Sem CPF cadastrado)'), ' | Status da Conta: ',
-    CASE
-        WHEN statusConta = 1 THEN 'Ativo'
-        ELSE 'Desativado'
-    END) AS 'Descrição'
-FROM Usuario;
+SELECT CONCAT('Nome do usuário: ', nome, ' | Email: ', email, ' | Documento: ', IFNULL(Documento, '(Sem Documento cadastrado)'),
+FROM cliente;
 
 -- =========================================================
 -- LOCAIS
@@ -86,7 +61,7 @@ SELECT CONCAT(
     'Frigorífico: ', L.nomeLocal,
     ' | Cidade: ', IFNULL(L.cidade, 'Não informada'),
     ' | CEP: ', IFNULL(L.cep, 'CEP Pendente'),
-    ' | Gerente: ', IFNULL(R.nomeCompleto, 'Aguardando contratação'),
+    ' | Gerente: ', IFNULL(R.nome, 'Aguardando contratação'),
     ' | Status: ',
     CASE
         WHEN L.statusOperacao = 1 THEN 'Ativo'
