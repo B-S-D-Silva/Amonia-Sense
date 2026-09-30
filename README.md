@@ -52,7 +52,7 @@ Execute o script de criação das tabelas localizado na pasto do projeto:
 ```
 #### 3. Configurar e rodar o Arduino
 - Abra o Arduino IDE.
-- Conecte o microcontrolador via USB.
+- Conecte o microcontrolador via USB..
 - Abra o arquivo .ino localizado em arduino/.
 - Selecione a porta COM correspondente e clique em Carregar (Upload).
 
