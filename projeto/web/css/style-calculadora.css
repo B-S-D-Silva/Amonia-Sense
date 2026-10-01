@@ -1,0 +1,58 @@
+body {
+    background-color: #F2F2F2;
+    color: #2b2b2b;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+h1 {
+    color: #1d4b73;
+}
+
+h2 {
+    color: #000020;
+}
+
+.subtitulo {
+    font-size: 12px;
+}
+
+hr {
+    border: 1px solid #ccc;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.btn-secundario {
+    margin-right: 10px;
+}
+
+.btn-calcular {
+    background-color: #44749d;
+    color: white;
+    font-weight: bold;
+    padding: 8px;
+}
+
+.resultado-caixa {
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.resultado-erro {
+    background-color: #fff0f0;
+}
+
+.resultado-info {
+    background-color: #e6f2ff;
+}
+
+.destaque-vermelho {
+    color: red;
+}
+
+.destaque-total {
+    color: red;
+    font-size: 18px;
+}

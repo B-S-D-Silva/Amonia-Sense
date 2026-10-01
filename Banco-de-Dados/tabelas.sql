@@ -4,77 +4,52 @@ CREATE DATABASE amonia_sense;
 USE amonia_sense;
 
 -- =========================================================
--- RESPONSAVEL (precisa vir antes de Locais, Incidente e empresa)
+-- Cliente (precisa vir antes de Locais, Incidente e empresa)
 -- =========================================================
-CREATE TABLE Responsavel (
-    idResponsavel INT PRIMARY KEY AUTO_INCREMENT,
-    nomeCompleto VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE,
-    telefone VARCHAR(15),
-    cpf CHAR(11) UNIQUE,
+CREATE TABLE cliente (
+    idCliente INT PRIMARY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    documento VARCHAR(40) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    telefone VARCHAR(20),
+    dtNasc DATE NOT NULL,
+    senha VARCHAR(60) NOT NULL,
     CONSTRAINT chkEmailResp CHECK (email LIKE '%@%')
 );
 
-INSERT INTO Responsavel (nomeCompleto, email, telefone, cpf) VALUES
-('Carlos Eduardo Lima', 'carlos.lima@gmail.com', '11987654321', '12345678901'),
-('Mariana Souza', 'mariana.souza@gmail.com', '11912345678', '23456789012'),
-('Roberto Alves', 'roberto.alves@gmail.com', '21998765432', '34567890123'),
-('Fernanda Costa', 'fernanda.costa@gmail.com', '34991234567', '45678901234');
+INSERT INTO cliente (nome, documento, email, telefone, dtNasc, senha) VALUES
+('Carlos Eduardo Lima', '12345678901', 'carlos.lima@gmail.com', '11987654321', '1978-02-20', 'Senha segura 123'),
+('Mariana Souza', '23456789012', 'mariana.souza@gmail.com', '11912345678', '2000-04-10', 'Senha segura 123'),
+('Roberto Alves', '21998765432', 'roberto.alves@gmail.com', '34567890123', '1990-10-29', 'Senha segura 123'),
+('Fernanda Costa', '34991234567', 'fernanda.costa@gmail.com', '45678901234', '1988-07-25', 'Senha segura 123');
 
-SELECT * FROM Responsavel;
+SELECT * FROM cliente;
 
--- =========================================================
--- USUARIO
--- =========================================================
-CREATE TABLE Usuario (
-    idUsuario INT PRIMARY KEY AUTO_INCREMENT,
-    nomeCompleto VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    dataNascimento DATE,
-    senha VARCHAR(255),
-    dtAquisicao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    cpf CHAR(11) NOT NULL UNIQUE,
-    statusConta TINYINT DEFAULT 1,
-    CONSTRAINT chkEmail CHECK (email LIKE '%@%')
-);
+DESCRIBE cliente;
 
-DESCRIBE Usuario;
+SELECT CONCAT('Nome do usuário: ', nome, ' | Email: ', email, ' | Documento: ', IFNULL(Documento, '(Sem Documento cadastrado)')) AS 'Descrição'
+FROM cliente;
 
-INSERT INTO Usuario (nomeCompleto, email, dataNascimento, senha, cpf) VALUES
-('José Fernando da Silva', 'jose@gmail.com', '1978-02-20', 'Senha segura 123', '54896275614'),
-('Pedro Afonso dos Santos', 'pedro.afo@gmail.com', '2000-04-10', 'Senha segura 123', '36794201984'),
-('Guilherme dos Campos', 'gui.campos@gmail.com', '1990-10-29', 'Senha segura 123', '87925643102'),
-('Julia Miranda', 'julia.miranda@gmail.com', '1988-07-25', 'Senha segura 123', '14975236849');
+SELECT nome, TIMESTAMPDIFF(YEAR, dtNasc, NOW()) AS 'IDADE DO USUÁRIO'
+FROM cliente;
 
-SELECT * FROM Usuario;
-
-SELECT CONCAT('Nome do usuário: ', nomeCompleto, ' | Email: ', email, ' | CPF: ', IFNULL(cpf, '(Sem CPF cadastrado)')) AS 'Descrição'
-FROM Usuario;
-
-SELECT nomeCompleto, TIMESTAMPDIFF(YEAR, dataNascimento, NOW()) AS 'IDADE DO USUÁRIO'
-FROM Usuario;
-
-SELECT CONCAT('Nome do usuário: ', nomeCompleto, ' | Email: ', email, ' | CPF: ', IFNULL(cpf, '(Sem CPF cadastrado)'), ' | Status da Conta: ',
-    CASE
-        WHEN statusConta = 1 THEN 'Ativo'
-        ELSE 'Desativado'
-    END) AS 'Descrição'
-FROM Usuario;
+SELECT CONCAT('Nome do usuário: ', nome, ' | Email: ', email, ' | Documento: ', IFNULL(Documento, '(Sem Documento cadastrado)'),
+FROM cliente;
 
 -- =========================================================
 -- LOCAIS
 -- =========================================================
-CREATE TABLE Locais (
+CREATE TABLE Local (
     idLocal INT PRIMARY KEY AUTO_INCREMENT,
     nomeLocal VARCHAR(100) NOT NULL,
     cidade VARCHAR(50),
     cep CHAR(8),
-    fkResponsavel INT,
+    fkCliente INT,
     statusOperacao TINYINT DEFAULT 1,
-    CONSTRAINT fkResponsavelLocal FOREIGN KEY (fkResponsavel) REFERENCES Responsavel (idResponsavel)
+    CONSTRAINT fkClienteLocal FOREIGN KEY (fkCliente) REFERENCES Cliente (idCliente)
 );
 
-INSERT INTO Locais (nomeLocal, cidade, cep, fkResponsavel) VALUES
+INSERT INTO Locais (nomeLocal, cidade, cep, fkCliente) VALUES
 ('Fazenda Nova Orla', 'São José', '13010111', 1),
 ('Abatedouro do José', 'São Paulo', '01001000', NULL),
 ('Dessosa Minas', 'Volta Redonda', NULL, 3),
@@ -86,7 +61,7 @@ SELECT CONCAT(
     'Frigorífico: ', L.nomeLocal,
     ' | Cidade: ', IFNULL(L.cidade, 'Não informada'),
     ' | CEP: ', IFNULL(L.cep, 'CEP Pendente'),
-    ' | Gerente: ', IFNULL(R.nomeCompleto, 'Aguardando contratação'),
+    ' | Gerente: ', IFNULL(R.nome, 'Aguardando contratação'),
     ' | Status: ',
     CASE
         WHEN L.statusOperacao = 1 THEN 'Ativo'
@@ -94,7 +69,7 @@ SELECT CONCAT(
     END
 ) AS 'Relatório de Unidades'
 FROM Locais L
-LEFT JOIN Responsavel R ON L.fkResponsavel = R.idResponsavel;
+LEFT JOIN Cliente R ON L.fkCliente = R.idCliente;
 
 -- =========================================================
 -- SENSOR
@@ -136,7 +111,7 @@ FROM Sensor;
 CREATE TABLE Incidente (
     idIncidente INT PRIMARY KEY AUTO_INCREMENT,
     fkSensor INT NOT NULL,
-    responsavelLocal INT,
+    ClienteLocal INT,
     nivelDePerigo VARCHAR(20) NOT NULL,
     gravidade TINYINT NOT NULL,
     acaoTomada VARCHAR(150),
@@ -144,13 +119,13 @@ CREATE TABLE Incidente (
     dataResolucao DATETIME,
     statusIncidente VARCHAR(20) DEFAULT 'Aberto',
     CONSTRAINT fkIncidenteSensor FOREIGN KEY (fkSensor) REFERENCES Sensor(idSensor),
-    CONSTRAINT fkIncidenteResp FOREIGN KEY (responsavelLocal) REFERENCES Responsavel(idResponsavel),
+    CONSTRAINT fkIncidenteResp FOREIGN KEY (ClienteLocal) REFERENCES Cliente(idCliente),
     CONSTRAINT chkStatusIncidente CHECK (statusIncidente IN ('Aberto', 'Em Atendimento', 'Resolvido')),
     CONSTRAINT chkNivelDePerigo CHECK (nivelDePerigo IN ('Atenção', 'Perigo', 'Risco de Morte')),
     CONSTRAINT chkGravidade CHECK (gravidade IN (1, 2, 3))
 );
 
-INSERT INTO Incidente (fkSensor, responsavelLocal, nivelDePerigo, gravidade, acaoTomada, dataResolucao, statusIncidente) VALUES
+INSERT INTO Incidente (fkSensor, ClienteLocal, nivelDePerigo, gravidade, acaoTomada, dataResolucao, statusIncidente) VALUES
 (2, 1, 'Perigo', 2, 'Ventilação ativada manualmente e local evacuado', '2026-09-04 10:30:00', 'Resolvido'),
 (3, NULL, 'Atenção', 1, NULL, NULL, 'Aberto'),
 (4, 2, 'Risco de Morte', 3, 'Isolamento da área e acionamento dos bombeiros', NULL, 'Em Atendimento'),
@@ -162,7 +137,7 @@ SELECT
     CONCAT('Alerta no Sensor ID: ', fkSensor,
             ' | Nível: ', nivelDePerigo,
             ' | Gravidade: ', gravidade,
-            ' | Técnico: ', IFNULL(responsavelLocal, '(Aguardando)'),
+            ' | Técnico: ', IFNULL(ClienteLocal, '(Aguardando)'),
             ' | Ação: ', IFNULL(acaoTomada, '(Nenhuma ação registrada)'),
             ' | Status da Ocorrência: ',
             CASE
@@ -188,8 +163,8 @@ CREATE TABLE empresa (
     cnpj CHAR(14) UNIQUE NOT NULL,
     data_cadastro DATE DEFAULT (CURDATE()),
     status_contrato VARCHAR(10) NOT NULL,
-    fkResponsavel INT,
-    CONSTRAINT fkResponsavelEmpresa FOREIGN KEY (fkResponsavel) REFERENCES Responsavel(idResponsavel),
+    fkCliente INT,
+    CONSTRAINT fkClienteEmpresa FOREIGN KEY (fkCliente) REFERENCES Cliente(idCliente),
     CONSTRAINT checkContrato CHECK(status_contrato IN('Ativo','Cancelado')),
     data_pagamento DATETIME,
     status_pagamento TINYINT NOT NULL,

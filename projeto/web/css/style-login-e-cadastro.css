@@ -120,7 +120,8 @@ a {
     width: 118px;
     height: 62px;
     margin: 0 auto 12px auto;
-    background-image: url("./LogoAmonia.png");
+    background-image: url("../img/logo-amonia.png");
+
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
