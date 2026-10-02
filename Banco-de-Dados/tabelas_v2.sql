@@ -18,14 +18,15 @@ CREATE TABLE Empresa (
 CREATE TABLE Usuario (
 	idUsuario INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
-    documento VARCHAR(40) UNIQUE NOT NULL,
+    documento VARCHAR(40) UNIQUE NOT NULL, -- CPF ou Passaporte
 	telefone VARCHAR(20) NOT NULL,
 	email VARCHAR(100) UNIQUE NOT NULL,
 	senha VARCHAR(60) NOT NULL,
     dtNasc DATE NOT NULL,
-    CONSTRAINT chkEmailResp CHECK (email LIKE '%@%'),
     fkEmpresa INT,
-    CONSTRAINT fkEmpresaUsuario FOREIGN KEY (fkEmpresa) REFERENCES Empresa(idEmpresa) 
+    CONSTRAINT fkEmpresaUsuario FOREIGN KEY (fkEmpresa) REFERENCES Empresa(idEmpresa),
+    fkResponsavel INT, 
+    CONSTRAINT fkResponsavelUsuario FOREIGN KEY (fkResponsavel) REFERENCES Usuario(idUsuario)
 );
 
 -- =========================================================
@@ -65,4 +66,4 @@ CREATE TABLE Dado_captado (
     dataHora DATETIME,
     fkSensor INT, 
     CONSTRAINT fkSensorDado_captado FOREIGN KEY (fkSensor) REFERENCES Sensor(idSensor)
-)
+);
