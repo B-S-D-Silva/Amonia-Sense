@@ -7,7 +7,7 @@ USE amonia_sense;
 
 CREATE TABLE Empresa (
     idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(45) NOT NULL,
+    nomeFantasia VARCHAR(45) NOT NULL,
     cnpj VARCHAR(15) UNIQUE NOT NULL
 );
 
@@ -17,10 +17,10 @@ CREATE TABLE Empresa (
 
 CREATE TABLE Usuario (
 	idUsuario INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100),
+    nome VARCHAR(100) NOT NULL,
     documento VARCHAR(40) UNIQUE NOT NULL, -- CPF ou Passaporte
 	telefone VARCHAR(20) NOT NULL,
-	email VARCHAR(100) UNIQUE NOT NULL,
+	email VARCHAR(100) NOT NULL,
 	senha VARCHAR(60) NOT NULL,
     dtNasc DATE NOT NULL,
     fkEmpresa INT,
@@ -35,9 +35,10 @@ CREATE TABLE Usuario (
 
 CREATE TABLE Locall (
     idLocal INT PRIMARY KEY AUTO_INCREMENT,
+    UF char(2) NOT NULL,
     cidade VARCHAR(50) NOT NULL,
-    endereco VARCHAR(100),
-    cep VARCHAR(8) NOT NULL,
+    endereco VARCHAR(100) NOT NULL,
+    cep VARCHAR(8),
     fkEmpresa INT,
     CONSTRAINT fkEmpresaLocal FOREIGN KEY (fkEmpresa) REFERENCES Empresa (idEmpresa)
 );
@@ -48,10 +49,11 @@ CREATE TABLE Locall (
 
 CREATE TABLE Sensor (
     idSensor INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(45),
+    modelo VARCHAR(45) NOT NULL,
     tipo VARCHAR(45),
-    coordenada VARCHAR(100),
+    localizacao VARCHAR(50), -- RESOLVER LOCALIZAÇÃO 
     statuss VARCHAR(20),
+    CONSTRAINT chkstatus CHECK (statuss IN ('Ativo', 'Inativo', 'Manutenção')),
     fkLocal INT,
     CONSTRAINT fkLocalSensor FOREIGN KEY (fkLocal) REFERENCES Locall(idLocal)
 );
@@ -61,9 +63,10 @@ CREATE TABLE Sensor (
 -- =========================================================
 
 CREATE TABLE Dado_captado (
-	idDado INT,
+	idDado INT AUTO_INCREMENT,
+    fkSensor INT,
+	CONSTRAINT pkComposta PRIMARY KEY (idDado, fkSensor),
     concentracaoAmonia DECIMAL(10,2),
-    dataHora DATETIME,
-    fkSensor INT, 
-    CONSTRAINT fkSensorDado_captado FOREIGN KEY (fkSensor) REFERENCES Sensor(idSensor)
+    dataHora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fkDadoSensor FOREIGN KEY (fkSensor) REFERENCES Sensor(idSensor)
 );
