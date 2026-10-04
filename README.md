@@ -10,10 +10,10 @@ Depois que o GitHub Pages for habilitado e o workflow concluir a publicação, c
 
 | Página | Acesso |
 | --- | --- |
-| Início | [AmoniaSense](https://b-s-d-silva.github.io/Amonia-Sense/) |
-| Simulador financeiro | [Calculadora](https://b-s-d-silva.github.io/Amonia-Sense/calculadora.html) |
-| Login | [Entrar](https://b-s-d-silva.github.io/Amonia-Sense/pagina-login.html) |
-| Cadastro | [Criar conta](https://b-s-d-silva.github.io/Amonia-Sense/pagina-cadastro.html) |
+| Início | [AmoniaSense](https://b-s-d-silva.github.io/Amonia-Sense/projeto/web/index.html) |
+| Simulador financeiro | [Calculadora](https://b-s-d-silva.github.io/Amonia-Sense/projeto/web/calculadora.html) |
+| Login | [Entrar](https://b-s-d-silva.github.io/Amonia-Sense/projeto/web/pagina-login.html) |
+| Cadastro | [Criar conta](https://b-s-d-silva.github.io/Amonia-Sense/projeto/web/pagina-cadastro.html) |
 
 O site é estático: login e cadastro são demonstrações de interface e não salvam contas nem autenticam usuários em um servidor. A publicação é feita automaticamente pelo GitHub Actions a partir da pasta `projeto/web` sempre que há um push na branch `main`.
 
