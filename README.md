@@ -1,50 +1,96 @@
+<p align="center">
+  <img src="projeto/web/img/logo-amonia.png" alt="Logo AmoniaSense" width="520">
+</p>
+
 # AmoniaSense
 
-Protótipo acadêmico de monitoramento de vazamentos de amônia em frigoríficos bovinos. O projeto reúne uma interface web, scripts SQL e uma API para aquisição de dados com Arduino.
+Protótipo acadêmico de Internet das Coisas (IoT) para apoiar o monitoramento de vazamentos de amônia em ambientes de refrigeração industrial de frigoríficos bovinos. A proposta combina sensores, aquisição de dados, armazenamento e visualização para ajudar a identificar situações que exigem atenção.
 
-> **Nota sobre o sensor:** o protótipo utiliza o MQ-2 para simulação didática. Para detecção industrial de amônia (NH₃), devem ser usados sensores específicos, como MQ-137, ou detectores eletroquímicos homologados.
+> **Importante — uso didático:** o protótipo utiliza o sensor analógico MQ-2 como representação de leitura de gases. Ele não é um detector seletivo nem homologado para medir amônia em aplicações industriais. Uma instalação real deve usar sensores específicos para NH₃, como MQ-137, ou detectores eletroquímicos certificados, além de seguir as normas e orientações de segurança aplicáveis.
 
-## Visualizar as páginas
+## Acessar a interface
 
-Depois que o GitHub Pages for habilitado e o workflow concluir a publicação, cada tela poderá ser acessada diretamente:
+As telas web podem ser abertas individualmente:
 
 | Página | Acesso |
 | --- | --- |
-| Início | [AmoniaSense](https://b-s-d-silva.github.io/Amonia-Sense/projeto/web/index.html) |
+| Página inicial | [AmoniaSense](https://b-s-d-silva.github.io/Amonia-Sense/projeto/web/index.html) |
 | Simulador financeiro | [Calculadora](https://b-s-d-silva.github.io/Amonia-Sense/projeto/web/calculadora.html) |
-| Login | [Entrar](https://b-s-d-silva.github.io/Amonia-Sense/projeto/web/pagina-login.html) |
-| Cadastro | [Criar conta](https://b-s-d-silva.github.io/Amonia-Sense/projeto/web/pagina-cadastro.html) |
+| Login demonstrativo | [Entrar](https://b-s-d-silva.github.io/Amonia-Sense/projeto/web/pagina-login.html) |
+| Cadastro demonstrativo | [Criar conta](https://b-s-d-silva.github.io/Amonia-Sense/projeto/web/pagina-cadastro.html) |
 
-O site é estático: login e cadastro são demonstrações de interface e não salvam contas nem autenticam usuários em um servidor. A publicação é feita automaticamente pelo GitHub Actions a partir da pasta `projeto/web` sempre que há um push na branch `main`.
+A interface estática é publicada pelo GitHub Pages a partir de `projeto/web`. A publicação é automatizada pelo GitHub Actions quando há atualização na branch `main`. As páginas de login e cadastro são apenas demonstrações visuais: não criam contas, não autenticam usuários e não armazenam os dados enviados.
 
-Para habilitar a publicação no repositório, abra **Settings > Pages** e selecione **GitHub Actions** como origem. Depois que o workflow terminar, os links acima estarão disponíveis. Também é possível executar o workflow manualmente na aba **Actions**.
+## O que o protótipo propõe
 
-## Estrutura do repositório
+- **Leitura de gás:** aquisição periódica dos valores analógicos enviados pelo sensor conectado ao Arduino.
+- **Sinalização de anomalias:** indicação de condições de atenção e, na montagem física proposta, possibilidade de acionar alarme sonoro e sinalização visual local.
+- **Histórico:** armazenamento das leituras com data e hora em banco de dados relacional.
+- **Visualização:** acompanhamento dos valores e dos alertas em uma interface web.
+- **Simulador financeiro:** estimativas de perdas por paralisação, custo de implementação de sensores e passivo trabalhista.
 
-- [`projeto/web/`](projeto/web/) — páginas HTML, estilos e imagens da interface.
-- [`banco-de-dados/`](banco-de-dados/) — diagramas e scripts de criação do banco MySQL.
-- [`apiDataquino/dat-acqu-ino/`](apiDataquino/dat-acqu-ino/) — API Node.js para aquisição de dados.
+As telas do site e a API são componentes separados. A publicação no GitHub Pages hospeda somente arquivos estáticos; ela não executa a API Node.js, acessa portas seriais ou conecta ao MySQL.
+
+## Componentes do repositório
+
+| Caminho | Conteúdo |
+| --- | --- |
+| [`projeto/web/`](projeto/web/) | Site em HTML, CSS e JavaScript: página inicial, simulador financeiro, login e cadastro demonstrativos, além de imagens e estilos. |
+| [`apiDataquino/dat-acqu-ino/`](apiDataquino/dat-acqu-ino/) | API Node.js/Express para ler dados pela porta serial do Arduino e disponibilizar leituras em JSON. |
+| [`banco-de-dados/`](banco-de-dados/) | Diagrama MySQL e duas versões de scripts SQL para modelagem de clientes/empresas, locais, sensores, leituras e incidentes. |
+| [`.github/workflows/pages.yml`](.github/workflows/pages.yml) | Workflow de publicação do site no GitHub Pages. |
+
+**Observação sobre o hardware:** não há atualmente um sketch Arduino (`.ino`) neste repositório. O código da API pressupõe que o dispositivo envie leituras pela serial; o firmware e a montagem física precisam ser preparados separadamente.
+
+## Como executar localmente
+
+### Interface web
+
+1. Clone o repositório:
+
+   ```bash
+   git clone https://github.com/B-S-D-Silva/Amonia-Sense.git
+   cd Amonia-Sense
+   ```
+
+2. Abra `projeto/web/index.html` no navegador. A navegação do site permite acessar o simulador, o login e o cadastro. Também é possível abrir diretamente os outros arquivos `.html` da pasta.
+
+### API de aquisição serial
+
+Pré-requisitos: Node.js, Arduino conectado e configurado para transmitir dados pela serial, e opcionalmente um servidor MySQL.
+
+1. Entre na pasta da API e instale as dependências:
+
+   ```bash
+   cd apiDataquino/dat-acqu-ino
+   npm install
+   ```
+
+2. Configure a porta serial pela variável `ARDUINO_PORT` ou passe o caminho da porta como argumento. A API procura também um dispositivo Arduino compatível. A comunicação serial está configurada para **9600 baud**.
+
+3. Inicie o serviço:
+
+   ```bash
+   npm start
+   ```
+
+4. Com a API em execução, consulte as leituras em [`http://localhost:3300/sensores/gas`](http://localhost:3300/sensores/gas). Para encerrar, use `Ctrl+C` no terminal.
+
+O código recebe valores separados por linha e mantém as leituras em memória enquanto o processo está ativo. A gravação no MySQL está desabilitada por padrão. Para habilitá-la, é necessário configurar as credenciais localmente e adaptar o `INSERT` à tabela e ao esquema escolhidos. **Não versione credenciais reais.** Os scripts SQL incluídos têm estruturas diferentes e não criam automaticamente a tabela `medida` esperada pelo exemplo atual da API.
+
+### Banco de dados
+
+Os arquivos [`banco-de-dados/tabelas.sql`](banco-de-dados/tabelas.sql) e [`banco-de-dados/tabelas_v2.sql`](banco-de-dados/tabelas_v2.sql) representam versões distintas do modelo. Revise e escolha a versão adequada antes de executar. Em especial, `tabelas.sql` começa com `DROP DATABASE IF EXISTS amonia_sense`, removendo o banco com esse nome e seus dados antes de recriá-lo. Faça backup e confirme o banco selecionado antes de executar qualquer script.
 
 ## Tecnologias
 
-- **Interface:** HTML, CSS e JavaScript.
-- **Aquisição de dados:** Arduino e sensor MQ-2 (protótipo).
-- **Banco de dados:** MySQL.
-- **API:** Node.js.
-
-## Executar a interface localmente
-
-Abra `projeto/web/index.html` no navegador. Para navegar pelas demais telas, use os links do menu ou abra `calculadora.html`, `pagina-login.html` e `pagina-cadastro.html` na mesma pasta.
-
-## Banco de dados
-
-Os scripts SQL estão na pasta [`banco-de-dados/`](banco-de-dados/). Revise o conteúdo do script desejado antes de executá-lo no MySQL.
-
-## API de aquisição de dados
-
-Consulte as instruções específicas em [`apiDataquino/dat-acqu-ino/README.md`](apiDataquino/dat-acqu-ino/README.md). A API precisa ser executada localmente e configurada com as credenciais do banco; ela não é hospedada pelo GitHub Pages.
+- **Interface:** HTML5, CSS3 e JavaScript.
+- **Aquisição serial:** Node.js, Express e SerialPort.
+- **Persistência prevista:** MySQL, com biblioteca `mysql2` na API.
+- **Hardware do protótipo didático:** Arduino e sensor MQ-2.
+- **Hospedagem das páginas estáticas:** GitHub Pages e GitHub Actions.
 
 ## Instituição
 
-São Paulo Tech School  
+São Paulo Tech School (SPTech)<br>
 Curso de Tecnologia da Informação / Análise e Desenvolvimento de Sistemas
