@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amônia Sense</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body style="display: flex;">
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+    <div class="chart-container" style="position: relative; height:200vh; width:200vw">
+        <canvas id="chart"></canvas>
+    </div>
+</body>
+
+</html>
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [' Dia 01', 'Dia 05', 'Dia 10', 'Dia 15', 'Dia 20', 'Dia 25', 'Dia 30'],
+            datasets: [{
+                label: 'PPM',
+                data: [12, 0, 0, 0, 15, 0],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    function beforePrintHandler() {
+        for (let id in Chart.instances) {
+            Chart.instances[id].resize();
+            window.addEventListener('beforeprint', () => {
+                myChart.resize(600, 600);
+            });
+            window.addEventListener('afterprint', () => {
+                myChart.resize();
+            });
+        }
+    }
+</script>
