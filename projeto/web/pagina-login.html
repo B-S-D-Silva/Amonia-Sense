@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entre</title>
-    <link rel="stylesheet" href="../web/css/style-login-e-cadastro.css">
+    <link rel="stylesheet" href="./css/style-login-e-cadastro.css">
 
     <style>
         .login_body {
@@ -72,8 +72,8 @@
     <div class="fundoLoginECadastro"></div>
     <header class="topbar">
         <div class="nav-shell">
-            <div class="brand" onclick="window.location.href='../telaHome/homePage.html'">
-                <img class="brand-logo" src="../web/img/logo-transparente.png" alt="AmoniaSense">
+            <div class="brand" onclick="window.location.href='./index.html'">
+                <img class="brand-logo" src="./img/logo-transparente.png" alt="AmoniaSense">
             </div>
             <nav class="nav-links">
                 <a href="./index.html">Home</a>
@@ -91,7 +91,7 @@
             <input type="text" placeholder="Usuário" id="input_login">
             <input type="password" placeholder="Senha" id="input_senha">
             <button class="btn_entrar" onclick="Entrar()">Entrar</button>
-            <button class="btn_cadastro" onclick="window.location.href='http:paginadecadastro.html'">Criar conta</button>
+            <button class="btn_cadastro" onclick="window.location.href='./pagina-cadastro.html'">Criar conta</button>
             <div id="div_mensagem"></div>
         </div>
     </div>
@@ -101,7 +101,7 @@
         
         <div class="coluna-logo">
             <div class="brand">
-                <img class="brand-logo" src="../web/img/logo-transparente.png">
+                <img class="brand-logo" src="./img/logo-transparente.png" alt="AmoniaSense">
             </div>
             <p>Segurança do trabalho e eficiência operacional por meio do monitoramento contínuo de gases refrigerantes no setor frigorífico.</p>
         </div>
@@ -137,7 +137,7 @@
             let senha = input_senha.value
 
             if (login == 'Kaua@gmail.com' && senha == '1234') {
-                window.location.href = "http:dash.html"
+                window.location.href = "./calculadora.html"
             } else {
                 div_mensagem.innerHTML = `Usuario Invalido`
             }
