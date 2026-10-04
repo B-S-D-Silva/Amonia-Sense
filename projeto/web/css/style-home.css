@@ -371,20 +371,32 @@ body {
 }
 
 .ferramentas > span {
-    font-size: 8px;
+    font-size: 10px;
 }
 
 .ferramentas div {
-    margin-top: 25px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    color: #6B6760;
+}
+
+.lista-itens {
     display: flex;
     justify-content: center;
-    gap: 50px;
+    gap: 50px;             
+    margin-top: 20px;
 }
 
 .ferramentas p {
-    font-size: 8px;
+    margin: 0;
     color: #aaa;
+    font-weight: 700;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;        
 }
+
 
 
 /* RODAPÉ */
@@ -411,7 +423,7 @@ footer {
 
 .footer-conteudo p {
     font-size: 8px;
-    color: #c5cbd0;
+    color: #BDB8AD;
     line-height: 1.7;
 }
 
@@ -421,4 +433,22 @@ footer {
     padding-top: 12px;
     font-size: 7px;
     color: #aaa;
+}
+.footer-conteudo {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+}
+
+.coluna-logo {
+    width: 35%;
+}
+
+.colunas-direita {
+    display: flex;
+    gap: 80px; 
+}
+
+.colunas-direita div {
+    width: auto;
 }

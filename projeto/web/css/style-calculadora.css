@@ -336,3 +336,38 @@ body {
         flex-wrap: wrap;
     }
 }
+/* RODAPÉ */
+
+footer {
+    background-color: #172b3d;
+    color: white;
+    padding: 35px 5% 15px;
+}
+
+.footer-conteudo {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-conteudo div {
+    width: 25%;
+}
+
+.footer-conteudo h3 {
+    font-size: 10px;
+    margin-bottom: 10px;
+}
+
+.footer-conteudo p {
+    font-size: 8px;
+    color: #BDB8AD;
+    line-height: 1.7;
+}
+
+.copyright {
+    border-top: 1px solid #304455;
+    margin-top: 25px;
+    padding-top: 12px;
+    font-size: 7px;
+    color: #aaa;
+}
