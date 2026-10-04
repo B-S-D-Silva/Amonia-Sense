@@ -371,3 +371,52 @@ footer {
     font-size: 7px;
     color: #aaa;
 }
+footer {
+    background-color: #172b3d;
+    color: white;
+    padding: 35px 5% 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.footer-conteudo {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    align-items: flex-start;
+}
+
+.coluna-logo {
+    width: 35%;
+}
+
+.colunas-direita {
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+}
+
+.footer-conteudo h3 {
+    font-size: 10px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    margin-top: 0;
+}
+
+.footer-conteudo p {
+    font-size: 8px;
+    color: #BDB8AD;
+    line-height: 1.7;
+    margin: 0 0 5px 0;
+}
+
+.copyright {
+    border-top: 1px solid #304455;
+    margin-top: 25px;
+    padding-top: 12px;
+    font-size: 7px;
+    color: #aaa;
+    display: flex;
+    justify-content: space-between;
+}
