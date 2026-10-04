@@ -8,11 +8,29 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body style="display: flex;">
+<body style="display: flex; flex-direction: column;">
+    
+    <h1 style="color: #1d2d3e;">Relatório Mensal de Monitoramento</h1>
+    <h3 style="color: #1d2d3e;">AmoniaSense - Monitoramento de Amônia</h3>
+    <span>Relatório do mês</span>
+    <select id="select_mes">
+        <option value="1">Janeiro</option>
+        <option value="2">Fevereiro</option>
+        <option value="3">Março</option>
+        <option value="4">Abril</option>
+        <option value="5">Maio</option>
+        <option value="6">Junho</option>
+        <option value="7">Julho</option>
+        <option value="8">Agosto</option>
+        <option value="9">Setembro</option>
+        <option value="10">Outubro</option>
+        <option value="11">Novembro</option>
+        <option value="12">Dezembro</option>
+    </select>
     <div>
         <canvas id="myChart"></canvas>
     </div>
-    <div class="chart-container" style="position: relative; height:200vh; width:200vw">
+    <div class="chart-container" style="position: relative; height:20vh; width:20vw">
         <canvas id="chart"></canvas>
     </div>
 </body>
@@ -20,6 +38,7 @@
 </html>
 <script>
     const ctx = document.getElementById('myChart');
+    let mes = select_mes.value
 
     new Chart(ctx, {
         type: 'line',
@@ -39,16 +58,4 @@
             }
         }
     });
-
-    function beforePrintHandler() {
-        for (let id in Chart.instances) {
-            Chart.instances[id].resize();
-            window.addEventListener('beforeprint', () => {
-                myChart.resize(600, 600);
-            });
-            window.addEventListener('afterprint', () => {
-                myChart.resize();
-            });
-        }
-    }
 </script>
