@@ -12,8 +12,8 @@ html {
 /* Corpo da pgn */
 body {
     font-family: Arial, sans-serif;
-    color: #172b3d;
-    background-color: white;
+    color: #1A2A3A;
+    background-color: #FFFFFF;
 }
 
 
@@ -57,15 +57,15 @@ body {
 }
 
 .nav-links a {
-    color: white;
+    color: #FFFFFF;
     text-decoration: none;
     font-size: 11px;
     font-weight: 600;
 }
 
 .botao-login {
-    background-color: white;
-    color: #172b3d !important;
+    background-color: #FFFFFF;
+    color: #1A2A3A !important;
     padding: 9px 20px;
     border-radius: 12px;
 }
@@ -85,21 +85,21 @@ body {
 .fundoIntro {
     height: 100%;
     padding: 150px 0 0 8%;
-    background-color: rgba(12, 35, 55, 0.70);
+    background-color: rgba(26, 42, 58, 0.5);
 }
 
 .intro {
     display: inline-block;
     padding: 5px 9px;
     margin-bottom: 15px;
-    background-color: #17679e;
-    color: white;
+    background-color: #44749D;
+    color: #FFFFFF;
     font-size: 8px;
     border-radius: 10px;
 }
 
 .fundoIntro h1 {
-    color: white;
+    color: #FFFFFF;
     font-size: 34px;
     line-height: 1.1;
     margin-bottom: 15px;
@@ -107,7 +107,7 @@ body {
 
 .subtitulo {
     width: 430px;
-    color: white;
+    color: #FFFFFF;
     font-size: 12px;
     line-height: 1.5;
 }
@@ -119,8 +119,8 @@ body {
 }
 
 .botoes a {
-    background-color: white;
-    color: #172b3d;
+    background-color: #FFFFFF;
+    color: #1A2A3A;
     padding: 10px 15px;
     border-radius: 20px;
     text-decoration: none;
@@ -128,8 +128,8 @@ body {
 }
 
 .botoes a:last-child {
-    background-color: #17679e;
-    color: white;
+    background-color: #44749D;
+    color: #FFFFFF;
 }
 
 
@@ -175,7 +175,7 @@ body {
 
 .card {
     width: 200px;
-    background-color: white;
+    background-color: #FFFFFF;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 10px #aaa;
@@ -237,8 +237,8 @@ body {
     height: 25px;
     padding-top: 5px;
     text-align: center;
-    color: white;
-    background-color: #397ca7;
+    color: #FFFFFF;
+    background-color: #44749D;
     border-radius: 50%;
     font-size: 12px;
 }
@@ -297,8 +297,8 @@ body {
     display: inline-block;
     margin-top: 15px;
     padding: 8px 15px;
-    background-color: #397ca7;
-    color: white;
+    background-color: #44749D;
+    color: #FFFFFF;
     text-decoration: none;
     font-size: 8px;
 }
@@ -403,8 +403,8 @@ body {
 /* RODAPÉ */
 
 footer {
-    background-color: #172b3d;
-    color: white;
+    background-color: #1A2A3A;
+    color: #FFFFFF;
     padding: 35px 5% 15px;
 }
 
