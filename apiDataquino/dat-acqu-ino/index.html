@@ -1,85 +1,398 @@
 <!doctype html>
-<html>
+<html lang="pt-BR">
 
 <head>
-    <title>Graphics</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Monitoramento de Amônia</title>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="../../projeto/web/css/styleDash.css">
 </head>
 
 <body>
 
-    <h1>Graphics</h1>
-    <div style="display: flex;">
-        <div style="width: 50%;">
-            <canvas id="sensorGas"></canvas>
+    <main>
+
+        <div class="titulo">
+
+            <h1>Monitoramento de amônia</h1>
+
+            <p>Câmara frigorífica de carnes bovinas</p>
+
+            <span>Acompanhe a segurança da câmara em tempo real.</span>
+
         </div>
-    </div>
+
+
+        <section class="cards">
+
+            <div class="card sensor">
+
+                <div class="card-top">
+
+                    <span>SENSOR CONECTADO</span>
+
+                </div>
+
+                <h2>Sensor 1</h2>
+
+                <p>Câmara Bovinos 01</p>
+
+                <div class="ativo">Ativo</div>
+
+                <div class="linha"></div>
+
+                <small>Sinal estável</small>
+
+            </div>
+
+
+            <div class="card amonia">
+
+                <div class="card-top">
+
+                    <span>AMÔNIA ATUAL</span>
+
+                </div>
+
+                <div class="valor">
+                    0
+                    <small>ppm</small>
+                </div>
+
+                <div class="atencao">
+                    Atenção
+                </div>
+
+                <div class="linha"></div>
+
+                <small>Atualizado em tempo real</small>
+
+            </div>
+
+
+            <div class="card estado">
+
+                <div class="card-top">
+
+                    <span>ESTADO DA CÂMARA</span>
+
+                </div>
+
+                <h2>Atenção</h2>
+
+                <p>Concentração acima do ideal</p>
+
+                <div class="linha"></div>
+
+                <small>
+                    Faixa atual:
+                    <strong>0 ppm</strong>
+                </small>
+
+            </div>
+
+        </section>
+
+
+        <section class="conteudo">
+
+
+            <div class="grafico-card">
+
+                <div class="grafico-topo">
+
+                    <div>
+
+                        <h2>Leitura de PPM em tempo real</h2>
+
+                        <p>
+                            Evolução das leituras atuais recebidas pelo sensor
+                        </p>
+
+                    </div>
+
+                    <div class="pico">
+                        Pico de 0 ppm
+                    </div>
+
+                </div>
+
+
+                <div class="grafico">
+
+                    <canvas id="sensorGas"></canvas>
+
+                </div>
+
+
+                <div class="legenda">
+
+                    <div class="legenda-item estavel">
+                        <span></span>
+                        0 ppm - Estável
+                    </div>
+
+                    <div class="legenda-item atencao-legenda">
+                        <span></span>
+                        1-9 ppm - Atenção
+                    </div>
+
+                    <div class="legenda-item critico">
+                        <span></span>
+                        10+ ppm - Crítico
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="eventos">
+
+                <div class="eventos-topo">
+
+                    <div>
+
+                        <h2>Eventos de hoje</h2>
+
+                        <p>Ocorrências de amônia detectadas</p>
+
+                    </div>
+
+                    <span>3 eventos</span>
+
+                </div>
+
+
+                <div class="evento critico-evento">
+
+                    <div>
+                        <strong>Crítico</strong>
+                        <p>15:42 - 8 min</p>
+                    </div>
+
+                    <b>11 ppm</b>
+
+                </div>
+
+
+                <div class="evento atencao-evento">
+
+                    <div>
+                        <strong>Atenção</strong>
+                        <p>09:18 - 12 min</p>
+                    </div>
+
+                    <b>3 ppm</b>
+
+                </div>
+
+
+                <div class="evento atencao-evento">
+
+                    <div>
+                        <strong>Atenção</strong>
+                        <p>03:07 - 4 min</p>
+                    </div>
+
+                    <b>1 ppm</b>
+
+                </div>
+
+
+                <div class="historico">
+                    Ver histórico completo
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
 
     <script>
-        
 
-        var sensorGas = new Chart(document.getElementById('sensorGas').getContext('2d'), {
-            type: 'line',
-            data: {
-                datasets: [{
-                    label: 'Gás',
-                    borderColor: '#63B1BC',
-                    backgroundColor: '#0762C8'
-                }]
-            },
-            options: {
-                scales: {
-                    x: {
-                        beginAtZero: true
+        var sensorGas = new Chart(
+            document.querySelector('#sensorGas').getContext('2d'),
+            {
+                type: 'line',
+
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Gás',
+                        borderColor: '#087f5b',
+                        borderWidth: 3,
+                        tension: 0.3,
+                        pointRadius: 5,
+                        pointBackgroundColor: '#ffffff',
+                        pointBorderWidth: 3,
+                        fill: false,
+                        data: []
+                    }]
+                },
+
+                plugins: [{
+                    id: 'faixasDeSeguranca',
+                    beforeDraw(grafico) {
+                        const { ctx, chartArea, scales: { y } } = grafico;
+
+                        if (!chartArea) {
+                            return;
+                        }
+
+                        const faixas = [
+                            { inicio: 0, fim: 1, cor: 'rgba(32, 163, 107, 0.10)' },
+                            { inicio: 1, fim: 10, cor: 'rgba(228, 167, 46, 0.12)' },
+                            { inicio: 10, fim: y.max, cor: 'rgba(223, 91, 82, 0.10)' }
+                        ];
+
+                        ctx.save();
+
+                        faixas.forEach(({ inicio, fim, cor }) => {
+                            const limiteInferior = Math.max(inicio, y.min);
+                            const limiteSuperior = Math.min(fim, y.max);
+
+                            if (limiteInferior >= limiteSuperior) {
+                                return;
+                            }
+
+                            const topo = y.getPixelForValue(limiteSuperior);
+                            const base = y.getPixelForValue(limiteInferior);
+
+                            ctx.fillStyle = cor;
+                            ctx.fillRect(
+                                chartArea.left,
+                                topo,
+                                chartArea.right - chartArea.left,
+                                base - topo
+                            );
+                        });
+
+                        ctx.restore();
                     },
-                    y: {
-                        title: {
-                            display: true,
-                            text: '(0-1)'
+                    beforeDatasetsDraw(grafico) {
+                        const { ctx, chartArea, scales: { y } } = grafico;
+
+                        if (!chartArea) {
+                            return;
+                        }
+
+                        ctx.save();
+                        ctx.setLineDash([4, 4]);
+                        ctx.lineWidth = 1;
+
+                        [
+                            { valor: 1, cor: '#d49a2a' },
+                            { valor: 10, cor: '#cf554b' }
+                        ].forEach(({ valor, cor }) => {
+                            if (valor < y.min || valor > y.max) {
+                                return;
+                            }
+
+                            const posicao = y.getPixelForValue(valor);
+
+                            ctx.beginPath();
+                            ctx.strokeStyle = cor;
+                            ctx.moveTo(chartArea.left, posicao);
+                            ctx.lineTo(chartArea.right, posicao);
+                            ctx.stroke();
+                        });
+
+                        ctx.restore();
+                    }
+                }],
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+
+                    scales: {
+
+                        x: {
+                            beginAtZero: true,
+
+                            grid: {
+                                display: false
+                            }
                         },
-                        beginAtZero: true
+
+                        y: {
+                            beginAtZero: true,
+
+                            suggestedMax: 12,
+
+                            title: {
+                                display: true,
+                                text: 'PPM'
+                            }
+                        }
                     }
                 }
             }
-        });
+        );
 
-        var paginacao = {};
-        var tempo = {};
+
+        var tempo = 0;
+
 
         function obterDados(grafico, endpoint) {
-            fetch('http://localhost:3300/sensores/' + endpoint)
-                .then(response => response.json())
-                .then(valores => {
-                    if (paginacao[endpoint] == null) {
-                        paginacao[endpoint] = 0;
-                    }
-                    if (tempo[endpoint] == null) {
-                        tempo[endpoint] = 0;
-                    }
 
-                    var ultimaPaginacao = paginacao[endpoint];
-                    paginacao[endpoint] = valores.length;
-                    valores = valores.slice(ultimaPaginacao);
+            fetch('http://localhost:3300/sensores/' + endpoint)
+
+                .then(response => response.json())
+
+                .then(valores => {
+
+                    valores = valores.slice(-10);
+
+                    grafico.data.labels = [];
+
+                    grafico.data.datasets[0].data = [];
+
 
                     valores.forEach((valor) => {
-                        if (grafico.data.labels.length == 10 && grafico.data.datasets[0].data.length == 10) {
-                            grafico.data.labels.shift();
-                            grafico.data.datasets[0].data.shift();
-                        }
 
-                        grafico.data.labels.push(tempo[endpoint]++);
-                        grafico.data.datasets[0].data.push(parseFloat(valor));
-                        grafico.update();
+                        grafico.data.labels.push(tempo++);
+
+                        grafico.data.datasets[0].data.push(
+                            parseFloat(valor)
+                        );
+
                     });
+
+
+                    grafico.update();
+
                 })
-                .catch(error => console.error('Erro ao obter dados:', error));
+
+                .catch(error =>
+                    console.error('Erro ao obter dados:', error)
+                );
         }
 
+
         setInterval(() => {
+
             obterDados(sensorGas, 'gas');
+
         }, 1000);
 
     </script>
+
 </body>
 
 </html>
