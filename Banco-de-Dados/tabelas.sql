@@ -4,7 +4,7 @@ CREATE DATABASE amonia_sense;
 USE amonia_sense;
 
 -- =========================================================
--- Cliente (precisa vir antes de Locais, Incidente e empresa)
+-- Cliente (precisa vir antes de Local, Incidente e empresa)
 -- =========================================================
 CREATE TABLE cliente (
     idCliente INT PRIMARY AUTO_INCREMENT,
@@ -37,25 +37,26 @@ SELECT CONCAT('Nome do usuário: ', nome, ' | Email: ', email, ' | Documento: ',
 FROM cliente;
 
 -- =========================================================
--- LOCAIS
+-- Local
 -- =========================================================
 CREATE TABLE Local (
     idLocal INT PRIMARY KEY AUTO_INCREMENT,
     nomeLocal VARCHAR(100) NOT NULL,
     cidade VARCHAR(50),
+    
     cep CHAR(8),
     fkCliente INT,
     statusOperacao TINYINT DEFAULT 1,
     CONSTRAINT fkClienteLocal FOREIGN KEY (fkCliente) REFERENCES Cliente (idCliente)
 );
 
-INSERT INTO Locais (nomeLocal, cidade, cep, fkCliente) VALUES
+INSERT INTO Local (nomeLocal, cidade, cep, fkCliente) VALUES
 ('Fazenda Nova Orla', 'São José', '13010111', 1),
 ('Abatedouro do José', 'São Paulo', '01001000', NULL),
 ('Dessosa Minas', 'Volta Redonda', NULL, 3),
 ('Fazenda Novos Ares', 'Uberlândia', '14010200', 4);
 
-SELECT * FROM Locais;
+SELECT * FROM Local;
 
 SELECT CONCAT(
     'Frigorífico: ', L.nomeLocal,
@@ -68,7 +69,7 @@ SELECT CONCAT(
         ELSE 'Desativado'
     END
 ) AS 'Relatório de Unidades'
-FROM Locais L
+FROM Local L
 LEFT JOIN Cliente R ON L.fkCliente = R.idCliente;
 
 -- =========================================================
@@ -82,7 +83,7 @@ CREATE TABLE Sensor (
     dataHoraLeitura DATETIME DEFAULT CURRENT_TIMESTAMP,
     statusSensor VARCHAR(20) DEFAULT 'ATIVO',
     fkLocal INT,
-    CONSTRAINT fkSensorLocal FOREIGN KEY (fkLocal) REFERENCES Locais(idLocal),
+    CONSTRAINT fkSensorLocal FOREIGN KEY (fkLocal) REFERENCES Local(idLocal),
     CONSTRAINT chk_sensor_status CHECK (statusSensor IN ('ATIVO', 'MANUTENCAO', 'INATIVO')),
     CONSTRAINT chkconcentracaoValor CHECK (concentracaoValor >= 0 AND concentracaoValor <= 1023),
     CONSTRAINT chkStatusVazamento CHECK (statusVazamento IN ('Normal', 'Alerta', 'Evacuação'))
