@@ -125,15 +125,28 @@ main {
     font-weight: 400;
 }
 
-.atencao {
+.indicador {
     display: inline-block;
     margin-top: 7px;
     padding: 5px 9px;
-    color: #a66a05;
-    background: #fff4dc;
     border-radius: 20px;
     font-size: 11px;
     font-weight: 700;
+}
+
+.indicador[data-state="stable"] {
+    color: #16804d;
+    background: #eaf5ef;
+}
+
+.indicador[data-state="attention"] {
+    color: #a66a05;
+    background: #fff4dc;
+}
+
+.indicador[data-state="critical"] {
+    color: #bf4d40;
+    background: #fff0ed;
 }
 
 .linha {
@@ -149,7 +162,18 @@ main {
 
 .estado h2 {
     margin-top: 18px;
+}
+
+.estado h2[data-state="stable"] {
+    color: #16804d;
+}
+
+.estado h2[data-state="attention"] {
     color: #a66a05;
+}
+
+.estado h2[data-state="critical"] {
+    color: #bf4d40;
 }
 
 .estado > small strong {

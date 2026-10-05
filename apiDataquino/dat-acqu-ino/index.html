@@ -59,12 +59,12 @@
                 </div>
 
                 <div class="valor">
-                    0
+                    <span id="valorAtual">0</span>
                     <small>ppm</small>
                 </div>
 
-                <div class="atencao">
-                    Atenção
+                <div class="indicador" id="indicadorAtual" data-state="stable">
+                    Estável
                 </div>
 
                 <div class="linha"></div>
@@ -82,15 +82,15 @@
 
                 </div>
 
-                <h2>Atenção</h2>
+                <h2 id="estadoNivel" data-state="stable">Estável</h2>
 
-                <p>Concentração acima do ideal</p>
+                <p id="estadoDescricao">Concentração dentro do ideal</p>
 
                 <div class="linha"></div>
 
                 <small>
                     Faixa atual:
-                    <strong>0 ppm</strong>
+                    <strong id="faixaAtual">0 ppm</strong>
                 </small>
 
             </div>
@@ -115,7 +115,7 @@
 
                     </div>
 
-                    <div class="pico">
+                    <div class="pico" id="picoAtual">
                         Pico de 0 ppm
                     </div>
 
@@ -348,29 +348,64 @@
 
         var tempo = 0;
 
+        function atualizarIndicadores(valor) {
+            const estado = valor === 0
+                ? { rotulo: 'Estável', descricao: 'Concentração dentro do ideal', chave: 'stable' }
+                : valor < 10
+                    ? { rotulo: 'Atenção', descricao: 'Concentração acima do ideal', chave: 'attention' }
+                    : { rotulo: 'Crítico', descricao: 'Concentração em nível crítico', chave: 'critical' };
+            const valorFormatado = valor.toLocaleString('pt-BR', { maximumFractionDigits: 2 });
+
+            document.querySelector('#valorAtual').textContent = valorFormatado;
+            document.querySelector('#indicadorAtual').textContent = estado.rotulo;
+            document.querySelector('#indicadorAtual').dataset.state = estado.chave;
+            document.querySelector('#estadoNivel').textContent = estado.rotulo;
+            document.querySelector('#estadoNivel').dataset.state = estado.chave;
+            document.querySelector('#estadoDescricao').textContent = estado.descricao;
+            document.querySelector('#faixaAtual').textContent = `${valorFormatado} ppm`;
+        }
+
 
         function obterDados(grafico, endpoint) {
 
             fetch('http://localhost:3300/sensores/' + endpoint)
 
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Falha ao consultar sensor: HTTP ${response.status}`);
+                    }
+
+                    return response.json();
+                })
 
                 .then(valores => {
 
-                    valores = valores.slice(-10);
+                    if (!Array.isArray(valores)) {
+                        throw new Error('A resposta do sensor não contém uma lista de leituras.');
+                    }
+
+                    valores = valores
+                        .map(Number)
+                        .filter(Number.isFinite)
+                        .slice(-10);
+
+                    if (valores.length === 0) {
+                        return;
+                    }
 
                     grafico.data.labels = [];
 
                     grafico.data.datasets[0].data = [];
 
+                    atualizarIndicadores(valores[valores.length - 1]);
+                    document.querySelector('#picoAtual').textContent =
+                        `Pico de ${Math.max(...valores).toLocaleString('pt-BR', { maximumFractionDigits: 2 })} ppm`;
 
                     valores.forEach((valor) => {
 
                         grafico.data.labels.push(tempo++);
 
-                        grafico.data.datasets[0].data.push(
-                            parseFloat(valor)
-                        );
+                        grafico.data.datasets[0].data.push(valor);
 
                     });
 
