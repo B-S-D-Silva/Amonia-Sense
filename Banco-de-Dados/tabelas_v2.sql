@@ -42,17 +42,25 @@ CREATE TABLE Sensor (
     CONSTRAINT fkLocalSensor FOREIGN KEY (fkLocal) REFERENCES Locall(idLocal)
 );
 
+ALTER TABLE Sensor RENAME COLUMN localizacao TO evaporador;
+
+-- ALTER TABLE Sensor modify column evaporador INT;
+
 CREATE TABLE Dado_captado (
 	idDado INT AUTO_INCREMENT,
     fkSensor INT,
 	CONSTRAINT pkComposta PRIMARY KEY (idDado, fkSensor),
     concentracaoAmonia DECIMAL(10,2),
-    localizacao VARCHAR(45),
     dataHora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fkDadoSensor FOREIGN KEY (fkSensor) REFERENCES Sensor(idSensor)
 );
 
-ALTER TABLE Dado_captado DROP COLUMN localizacao;
+ -- DROP TABLE Empresa;
+ -- DROP TABLE Usuario;
+ -- DROP TABLE Locall;
+ -- DROP TABLE Sensor;
+ -- DROP TABLE Dado_captado;
+
 
 INSERT INTO Empresa VALUES
 (DEFAULT, 'Frigorífico São Paulo', '12345678000101'),
@@ -76,55 +84,32 @@ INSERT INTO Locall VALUES
 (DEFAULT, 'SP', 'São Paulo', 'Jacu-Pessegp, 1000', '03000000', 1),
 (DEFAULT, 'PR', 'Curitiba', 'Av. das Indústrias, 800', '80000000', 2);
 
+-- TRUNCATE Locall;
 
 INSERT INTO Sensor VALUES
-(DEFAULT, 'MQ-2', 'Sensor de Gás', 'Evaporador 01', 'Ativo', 1),
-(DEFAULT, 'MQ-2', 'Sensor de Gás', 'Evaporador 02', 'Inativo', 1),
-(DEFAULT, 'MQ-2', 'Sensor de Gás', 'Evaporador 03', 'Ativo', 1),
-(DEFAULT, 'MQ-2', 'Sensor de Gás', 'Evaporador 04', 'Ativo', 1),
-(DEFAULT, 'MQ-2', 'Sensor de Gás', 'Evaporador 05', 'Ativo', 1);
+(DEFAULT, 'MQ-2', 'Sensor de Gás', '1', 'Ativo', 1),
+(DEFAULT, 'MQ-2', 'Sensor de Gás', '2', 'Inativo', 1),
+(DEFAULT, 'MQ-2', 'Sensor de Gás', '3', 'Ativo', 1),
+(DEFAULT, 'MQ-2', 'Sensor de Gás', '1', 'Ativo', 2),
+(DEFAULT, 'MQ-2', 'Sensor de Gás', '2', 'Ativo', 2);
 
-UPDATE Sensor SET fkLocal = 2
-	WHERE idSensor IN (4, 5);
-
-UPDATE Sensor
-SET localizacao = 'Sala de Desossa - Evaporador 01'
-WHERE idSensor = 1;
-
-UPDATE Sensor
-SET localizacao = 'Sala de Desossa - Evaporador 02'
-WHERE idSensor = 2;
-
-UPDATE Sensor
-SET localizacao = 'Sala de Desossa - Evaporador 03'
-WHERE idSensor = 3;
-
-UPDATE Sensor
-SET localizacao = 'Sala de Desossa - Evaporador 04'
-WHERE idSensor = 4;
-
-UPDATE Sensor
-SET localizacao = 'Sala de Desossa - Evaporador 05'
-WHERE idSensor = 5;
+-- truncate Sensor;
+select * from Sensor;
 
 INSERT INTO Dado_captado VALUES
 (DEFAULT, 1, 0.00, DEFAULT),
-(DEFAULT, 2, 3.50, DEFAULT),
+(DEFAULT, 2, null, DEFAULT),
 (DEFAULT, 3, 12.30, DEFAULT),
 (DEFAULT, 4, 5.00, DEFAULT),
 (DEFAULT, 5, 0.00, DEFAULT);
 
-truncate Dado_captado;
+-- truncate Dado_captado;
 
-SELECT Empresa.nomeFantasia AS Empresa, Locall.UF, 
-concat(Sensor.localizacao,', ',Dado_captado.concentracaoAmonia, ' PPM') AS 'Quantidade Vazada de PPM'
+SELECT Empresa.nomeFantasia AS 'Empresa', Locall.UF, Sensor.evaporador AS 'Evaporador', Dado_captado.concentracaoAmonia AS 'PPM Vazado',
+CASE
+	WHEN concentracaoAmonia = 0 THEN 'Normal'
+    WHEN concentracaoAmonia > 0 AND concentracaoAmonia < 10 THEN 'Alerta'
+    ELSE 'Alerta Crítico' END AS 'Estado'
 FROM Empresa JOIN Locall ON fkEmpresa = idEmpresa
 JOIN Sensor ON fkLocal = idLocal
 JOIN Dado_captado ON fkSensor = idSensor;
-
-SELECT Sensor.modelo AS 'Modelo', Sensor.idSensor 'Sensor',
-CASE
-	WHEN concentracaoAmonia = 0 THEN 'Sem vazamentos'
-    WHEN concentracaoAmonia > 0 AND concentracaoAmonia < 10 THEN 'Alerta'
-    ELSE 'Alerta Crítico' END AS 'Vazamento PPM' 
-    FROM Sensor JOIN Dado_captado ON idSensor = fkSensor;
