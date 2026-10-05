@@ -1,24 +1,16 @@
 CREATE DATABASE amonia_sense;
 USE amonia_sense;
 
--- =========================================================
--- Empresa 
--- =========================================================
-
 CREATE TABLE Empresa (
     idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
     nomeFantasia VARCHAR(45) NOT NULL,
     cnpj VARCHAR(15) UNIQUE NOT NULL
 );
 
--- =========================================================
--- Usuário
--- =========================================================
-
 CREATE TABLE Usuario (
 	idUsuario INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
-    documento VARCHAR(40) UNIQUE NOT NULL, -- CPF ou Passaporte
+    documento VARCHAR(40) UNIQUE NOT NULL,
 	telefone VARCHAR(20) NOT NULL,
 	email VARCHAR(100) NOT NULL,
 	senha VARCHAR(60) NOT NULL,
@@ -28,10 +20,6 @@ CREATE TABLE Usuario (
     fkResponsavel INT, 
     CONSTRAINT fkResponsavelUsuario FOREIGN KEY (fkResponsavel) REFERENCES Usuario(idUsuario)
 );
-
--- =========================================================
--- Local
--- =========================================================
 
 CREATE TABLE Locall (
     idLocal INT PRIMARY KEY AUTO_INCREMENT,
@@ -43,30 +31,68 @@ CREATE TABLE Locall (
     CONSTRAINT fkEmpresaLocal FOREIGN KEY (fkEmpresa) REFERENCES Empresa (idEmpresa)
 );
 
--- =========================================================
--- Sensor
--- =========================================================
-
 CREATE TABLE Sensor (
     idSensor INT PRIMARY KEY AUTO_INCREMENT,
     modelo VARCHAR(45) NOT NULL,
     tipo VARCHAR(45),
-    localizacao VARCHAR(50), -- RESOLVER LOCALIZAÇÃO 
+    localizacao VARCHAR(50),
     statuss VARCHAR(20),
     CONSTRAINT chkstatus CHECK (statuss IN ('Ativo', 'Inativo', 'Manutenção')),
     fkLocal INT,
     CONSTRAINT fkLocalSensor FOREIGN KEY (fkLocal) REFERENCES Locall(idLocal)
 );
 
--- =========================================================
--- Dados do Sensor
--- =========================================================
-
 CREATE TABLE Dado_captado (
 	idDado INT AUTO_INCREMENT,
     fkSensor INT,
 	CONSTRAINT pkComposta PRIMARY KEY (idDado, fkSensor),
     concentracaoAmonia DECIMAL(10,2),
+    localizacao VARCHAR(45),
     dataHora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fkDadoSensor FOREIGN KEY (fkSensor) REFERENCES Sensor(idSensor)
 );
+
+INSERT INTO Empresa VALUES
+(DEFAULT, 'Frigorífico São Paulo', '12345678000101'),
+(DEFAULT, 'Frigorífico Carnes Qualidade', '98765432000199');
+
+
+INSERT INTO Usuario VALUES
+(DEFAULT, 'Carlos Silva', '12345678900', '11999770001', 'carlos@email.com', 'Carlos/123456', '1990-05-15', 1, NULL),
+(DEFAULT, 'João Santos', '98765432100', '11999550002', 'joao@email.com', 'João/123456', '1995-08-20', 1, 1),
+(DEFAULT, 'Lucas Pereira', '32165498700', '11993490004', 'lucas@email.com', 'Lucas/123456', '1998-02-12', 1, 1),
+(DEFAULT, 'Gabriel Souza', '65498732100', '11998590005', 'gabriel@email.com', 'Gabriel/123456', '1996-11-25', 1, 1),
+(DEFAULT, 'Rafael Costa', '78912345600', '11999380006', 'rafael@email.com', 'Rafael/123456', '1992-07-18', 1, 2),
+(DEFAULT, 'Marcos Oliveira', '45678912300', '11999070003', 'marcos@email.com', 'Marcos/123456', '1988-03-10', 2, NULL),
+(DEFAULT, 'Felipe Almeida', '14725836900', '11999460007', 'felipe@email.com', 'Felipe/123456', '1999-04-05', 2, 6),
+(DEFAULT, 'Bruno Martins', '25836914700', '11991490008', 'bruno@email.com', 'Bruno/123456', '1994-09-30', 2, 6),
+(DEFAULT, 'André Lima', '36914725800', '11993890009', 'andre@email.com', 'Andre/123456', '1997-06-22', 1, 1),
+(DEFAULT, 'Pedro Henrique', '74185296300', '11996590010', 'pedro@email.com', 'Pedro/123456', '1993-12-08', 1, 2);
+
+
+INSERT INTO Locall VALUES
+(DEFAULT, 'SP', 'São Paulo', 'Jacu-Pessegp, 1000', '03000000', 1),
+(DEFAULT, 'PR', 'Curitiba', 'Av. das Indústrias, 800', '80000000', 2);
+
+
+INSERT INTO Sensor VALUES
+(DEFAULT, 'MQ-2', 'Sensor de Gás', 'Evaporador 01', 'Ativo', 1),
+(DEFAULT, 'MQ-2', 'Sensor de Gás', 'Evaporador 03', 'Inativo', 1),
+(DEFAULT, 'MQ-2', 'Sensor de Gás', 'Evaporador 04', 'Ativo', 1),
+(DEFAULT, 'MQ-2', 'Sensor de Gás', 'Evaporador 05', 'Ativo', 1),
+(DEFAULT, 'MQ-2', 'Sensor de Gás', 'Evaporador 06', 'Ativo', 1);
+
+
+INSERT INTO Dado_captado VALUES
+(DEFAULT, 1, 0.50, 'Evaporador 01', DEFAULT),
+(DEFAULT, 1, 1.00, 'Evaporador 01', DEFAULT),
+(DEFAULT, 1, 3.50, 'Evaporador 01', DEFAULT),
+(DEFAULT, 2, 11.50, 'Evaporador 02', DEFAULT),
+(DEFAULT, 3, 1.20, 'Evaporador 03', DEFAULT),
+(DEFAULT, 3, 7.80, 'Evaporador 03', DEFAULT),
+(DEFAULT, 3, 12.30, 'Evaporador 03', DEFAULT),
+(DEFAULT, 4, 4.50, 'Evaporador 04', DEFAULT),
+(DEFAULT, 4, 8.90, 'Evaporador 04', DEFAULT),
+(DEFAULT, 4, 10.50, 'Evaporador 04', DEFAULT),
+(DEFAULT, 5, 0.50, 'Evaporador 05', DEFAULT),
+(DEFAULT, 5, 10.80, 'Evaporador 05', DEFAULT);
