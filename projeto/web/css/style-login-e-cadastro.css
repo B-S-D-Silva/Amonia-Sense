@@ -36,7 +36,7 @@ a {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #1b3d59;
+    background: #1A2A3A;
     border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 999px;
     box-shadow: 0 10px 25px rgba(17, 47, 71, 0.22);
@@ -171,7 +171,7 @@ a {
 }
 
 .login_container input:focus {
-    border: 1px solid #5ca4e6;
+    border: 1px solid #1A2A3A;
     box-shadow: 0 0 0 3px rgba(92, 164, 230, 0.12);
 }
 
@@ -191,7 +191,7 @@ a {
 }
 
 .btn_entrar {
-    background: linear-gradient(135deg, #7db8ea 0%, #5ca4e6 100%);
+    background: linear-gradient(135deg, #1A2A3A 0%, #1A2A3A 100%);
     color: #ffffff;
 }
 
@@ -202,9 +202,9 @@ a {
 }
 
 .btn_cadastro {
-    border: 1px solid #5ca4e6;
+    border: 1px solid #1A2A3A;
     background-color: #fff;
-    color: #2f6fb3;
+    color: #1A2A3A;
     margin-top: 10px;
 }
 
@@ -217,7 +217,7 @@ a {
 }
 
 .login_container a {
-    color: #2f6fb3;
+    color: #1A2A3A;
     font-weight: 700;
 }
 
