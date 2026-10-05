@@ -105,10 +105,11 @@ INSERT INTO Dado_captado VALUES
 
 -- truncate Dado_captado;
 
-SELECT Empresa.nomeFantasia AS 'Empresa', Locall.UF, Sensor.evaporador AS 'Evaporador', Dado_captado.concentracaoAmonia AS 'PPM Vazado',
+SELECT Empresa.idEmpresa AS 'ID Empresa', Empresa.nomeFantasia AS 'Empresa', Locall.UF, Sensor.evaporador AS 'Evaporador', Dado_captado.concentracaoAmonia AS 'PPM Vazado',
 CASE
 	WHEN concentracaoAmonia = 0 THEN 'Normal'
     WHEN concentracaoAmonia > 0 AND concentracaoAmonia < 10 THEN 'Alerta'
+    WHEN concentracaoAmonia IS NULL THEN 'Sensor Inativo'
     ELSE 'Alerta Crítico' END AS 'Estado'
 FROM Empresa JOIN Locall ON fkEmpresa = idEmpresa
 JOIN Sensor ON fkLocal = idLocal
