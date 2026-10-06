@@ -1,159 +1,49 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entre</title>
-    <link rel="stylesheet" href="./css/style-login-e-cadastro.css">
-
-    <style>
-        .login_body {
-            display: flex !important;
-            flex-direction: column !important;
-            min-height: 100vh;
-            margin: 0;
-        }
-
-        .login_box {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 0;
-        }
-
-        footer {
-            background-color: #1A2A3A;
-            color: #FFFFFF;
-            padding: 35px 5% 15px;
-        }
-
-        .footer-conteudo {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .footer-conteudo div {
-            width: 25%;
-        }
-
-        .footer-conteudo h3 {
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .footer-conteudo p {
-            font-size: 12px;
-            color: #BDB8AD;
-            line-height: 1.7;
-        }
-
-        .copyright {
-            border-top: 1px solid #304455;
-            margin-top: 25px;
-            padding-top: 12px;
-            font-size: 10px;
-            color: #aaa;
-        }
-        .footer-conteudo {
-            display: flex;
-            justify-content: space-between;
-            text-align: left;
-        }
-
-        .coluna-logo {
-            width: 35%;
-        }
-
-        .colunas-direita {
-            display: flex;
-            gap: 80px; 
-        }
-
-        .colunas-direita div {
-            width: auto;
-        }
-    </style>
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style-pagina-login.css">
+    <script src="js/login.js"></script>
 </head>
 
 <body class="login_body">
     <div class="fundoLoginECadastro"></div>
-    <header class="topbar">
-        <div class="nav-shell">
-            <div class="brand" onclick="window.location.href='./index.html'">
+    <header>
+        <div class="header">
 
-                <img class="brand-logo" src="./img/logo-transparente.png" alt="AmoniaSense">
+            <div class="logo">
+                <img onclick="window.location.href='index.html'" src="img/logo-amonia.png">
             </div>
-            <nav class="nav-links">
-                <a href="./index.html">Home</a>
-                <a href="./pagina-login.html">Login</a>
-                <a href="./pagina-cadastro.html">Cadastro</a>
-            </nav>
+
+            <div class="botoes">
+                <button class="nav_botao" onclick="window.location.href='index.html'">Página inicial</button>
+            </div>
+
         </div>
+
     </header>
     
     <div class="login_box">
         <div class="login_container">
-            <h1>Acesse amonia sense</h1>
-            <p>Entre com sua conta</p>
-            <h2>Email</h2>
-            <input type="text" placeholder="Usuário" id="input_login">
-            <input type="password" placeholder="Senha" id="input_senha">
-            <button class="btn_entrar" onclick="Entrar()">Entrar</button>
-            <button class="btn_cadastro" onclick="window.location.href='./pagina-cadastro.html'">Criar conta</button>
-            <div id="div_mensagem"></div>
-        </div>
-    </div>
 
-    <footer>
-    <div class="footer-conteudo">
-        
-        <div class="coluna-logo">
-            <div class="brand">
-                <img class="brand-logo" src="./img/logo-transparente.png" alt="AmoniaSense">
-            </div>
-            <p>Segurança do trabalho e eficiência operacional por meio do monitoramento contínuo de gases refrigerantes no setor frigorífico.</p>
-        </div>
+        <h1>acesse amonia sense</h1>
 
-        <div class="colunas-direita">
-            <div>
-                <h3>NAVEGAÇÃO</h3>
-                <p>Tecnologia</p>
-                <p>Simulador Financeiro</p>
-                <p>Nossa Equipe</p>
-            </div>
+        <p>Entre com sua conta</p>
 
-            <div>
-                <h3>SUPORTE</h3>
-                <p>Documentação Técnica</p>
-                <p>suporte@amoniasense.com.br</p>
-                <p>+55 (11) 98765-4321</p>
-            </div>
-        </div>
+        <h2>Email</h2>
+
+        <input type="text" placeholder="Usuário" id="input_login">
+        <input type="password" placeholder="Senha" id="input_senha">
+
+        <button class="btn_entrar" onclick="Entrar()">Entrar</button>
+        <button class="btn_cadastro" onclick="window.location.href='pagina-cadastro.html'">Criar conta</button>
+
+        <div id="div_mensagem"></div>
 
     </div>
-
-    <div class="copyright">
-        <span class="texto-copy">© 2026 AmoniaSense Systems. Todos os direitos reservados.</span>
-        <span class="texto-normas">Desenvolvido sob normas NR-36 e NR-15.</span>
     </div>
-</footer>
-
-
-
-    <script>
-        function Entrar() {
-            let login = input_login.value
-            let senha = input_senha.value
-
-            if (login == 'Kaua@gmail.com' && senha == '1234') {
-                window.location.href = "./calculadora.html"
-            } else {
-                div_mensagem.innerHTML = `Usuario Invalido`
-            }
-        }
-    </script>
 
 </body>
-</html>
