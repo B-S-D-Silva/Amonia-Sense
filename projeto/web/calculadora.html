@@ -4,290 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AmoniaSense - Dashboard Financeiro</title>
-    <link rel="stylesheet" href="./css/style-calculadora.css">
+    <link rel="stylesheet" href="css/style-calculadora.css">
+    <script src="js/calculadora.js"></script>
 </head>
 <body>
 
-    <!-- MENU -->
-    <header class="topbar">
-        <div class="nav-shell">
+    <h1>AMONIA SENSE: SIMULADOR FINANCEIRO</h1>
+    <span>
+        <i>Esta ferramenta reúne simulações financeiras relacionadas ao risco de vazamento de amônia
+        na sala de desossa do frigorífico e ao investimento necessário para preveni-lo com o sistema
+        de monitoramento AmoniaSense. </i><br><br>
+        <b>Preencha os campos de cada bloco e clique no botão correspondente para visualizar o resultado.</b>
+    </span>
 
-            <div class="brand">
-                <img class="brand-logo" src="./img/logo-transparente.png" alt="AmoniaSense">
-            </div>
+    <hr>
 
-            <nav class="nav-links">
-                <a href="./index.html">Início</a>
-                <a href="./index.html#solucoes">Soluções</a>
-                <a href="./calculadora.html">Simulador Financeiro</a>
-                <a href="./index.html#tecnologia">Sobre</a>
-                <a href="./index.html#contato">Fale Conosco</a>
-                <a class="botao-login" href="./pagina-login.html">Entrar</a>
-                <a href="./pagina-cadastro.html">Cadastrar-se</a>
-            </nav>
+    <div>
+        <h2>1. Prejuízo Direto de um Acidente (Paralisação)</h2>
+        <span>
+            <i>Estime o prejuízo imediato causado por um único vazamento que paralisa a produção.</i>
+        </span><br><br>
 
+        <label>Qual a capacidade diária de carcaças bovinas?</label> <br>
+        <input value="3000" placeholder="Ex: 3000" type="number" id="input_capacidade"/>
+        <span class="subtitulo"><i>(Peso médio: 267,3kg)</i></span> <br><br>
+
+        <label>Quantas horas por dia a desossa funciona?</label><br>
+        <input value="24" placeholder="Ex: 24" type="number" id="input_funcionamento" /><br><br>
+
+        <label>Qual o custo médio da carne por kg? (R$)</label> <br>
+        <input value="23.00" placeholder="Ex: 23.00" type="number" id="input_custokg"/><br><br>
+
+        <label>Qual a quantidade de funcionários no setor?</label><br>
+        <input value="300" type="number" id="ipt_Funcionarios"><br><br>
+
+        <label>Qual o valor médio da hora do funcionário? (R$)</label><br>
+        <input value="13.00" type="number" id="ipt_HoraFuncionario"><br><br>
+
+        <button onclick="exibirHora()" class="btn-secundario">Informar tempo em Horas</button>
+        <button onclick="exibirMinutos()">Informar tempo em Minutos</button><br><br>
+
+        <div id="tempo">
+            <label>Tempo de paralisação causado pelo vazamento (minutos):</label> <br>
+            <input value="30" placeholder="Ex: 60" type="number" id="input_minutos"><br><br>
         </div>
-    </header>
 
-    <main class="calculator-page">
-        <header class="calculator-heading">
-            <h1>Simulador Financeiro</h1>
-            <p>Monitore perdas diretas por perda de gás amônia e interrupção na linha de desossa</p>
-        </header>
+        <button onclick="calcularIncidente()" class="btn-calcular">Calcular Prejuízo do Acidente</button><br><br>
 
-        <nav class="calculator-tabs" aria-label="Tipos de simulação">
-            <button id="botaoParalisacoes" class="calculator-tab active" type="button" onclick="mostrarParalisacoes()">
-                Faturamento em<br>Paralisações
-            </button>
-            <button id="botaoImplementacao" class="calculator-tab" type="button" onclick="mostrarImplementacao()">
-                Custo de<br>Implementação
-            </button>
-            <button id="botaoTrabalhista" class="calculator-tab" type="button" onclick="mostrarTrabalhista()">
-                Passivo<br>Trabalhista
-            </button>
-        </nav>
+        <div id="div_msgIncidente"></div>
+    </div>
 
-        <section class="calculator-grid active" id="painelParalisacoes">
-            <div class="calculator-card">
-                <h2>Simule o Faturamento em Paralisações</h2>
-                <div class="calculator-fields">
-                    <div class="field">
-                        <label for="input_capacidade">Qual a capacidade diária de carcaças bovinas?</label>
-                        <input value="3000" placeholder="Ex: 3000" type="number" id="input_capacidade">
-                        <small>Peso médio: 267,3 kg</small>
-                    </div>
-                    <div class="field">
-                        <label for="input_funcionamento">Quantas horas por dia a desossa funciona?</label>
-                        <input value="24" placeholder="Ex: 24" type="number" id="input_funcionamento">
-                    </div>
-                    <div class="field">
-                        <label for="input_custokg">Qual o custo médio de carne por kg? (R$)</label>
-                        <input value="23.00" placeholder="Ex: 23.00" type="number" id="input_custokg">
-                    </div>
-                    <div class="field-row">
-                        <div class="field">
-                            <label for="ipt_Funcionarios">Qual a quantidade de funcionários no setor?</label>
-                            <input value="300" type="number" id="ipt_Funcionarios">
-                        </div>
-                        <div class="field">
-                            <label for="ipt_HoraFuncionario">Qual o valor médio da hora do funcionário? (R$)</label>
-                            <input value="13.00" type="number" id="ipt_HoraFuncionario">
-                        </div>
-                    </div>
-                    <fieldset class="time-options">
-                        <legend>Simular tempo em:</legend>
-                        <label><input type="radio" name="tipoTempo" value="hora" onchange="exibirHora()"> Horas</label>
-                        <label><input type="radio" name="tipoTempo" value="minuto" checked onchange="exibirMinutos()"> Minutos</label>
-                    </fieldset>
-                    <div class="field">
-                        <label id="tempo_label" for="input_tempo">Tempo de paralisação causado pelo vazamento (minutos):</label>
-                        <input value="30" placeholder="Ex: 60" type="number" id="input_tempo">
-                    </div>
-                </div>
-                <button class="primary-button" type="button" onclick="calcularIncidente()">Simular</button>
-            </div>
+    <hr>
 
-            <aside class="calculator-card results-card">
-                <h2>Resultados Estimados de Paralisação</h2>
-                <div class="result-list">
-                    <div class="result-item">
-                        <div><small>Quantidade total</small><strong>Carne Contaminada</strong></div>
-                        <b id="resultado_carne">—</b>
-                    </div>
-                    <div class="result-item">
-                        <div><small>Custo total</small><strong>Prejuízo de Mercadoria</strong></div>
-                        <b id="resultado_mercadoria">—</b>
-                    </div>
-                    <div class="result-item">
-                        <div><small>Custo total</small><strong>Mão de Obra Ociosa</strong></div>
-                        <b id="resultado_mao_obra">—</b>
-                    </div>
-                    <div class="result-item result-total">
-                        <div><small>Economia com prevenção</small><strong>Prejuízo Total</strong></div>
-                        <b id="resultado_total">—</b>
-                    </div>
-                </div>
-                <p class="result-note">Estimativa baseada nos dados informados para a paralisação da produção.</p>
-            </aside>
-        </section>
+    <div>
 
-        <section class="calculator-grid" id="painelImplementacao" hidden>
-            <div class="calculator-card">
-                <h2>Simule o Custo de Implementação</h2>
-                <div class="calculator-fields">
-                    <div class="field">
-                        <label for="input_evaporadores">Número de evaporadores na sala de desossa</label>
-                        <input value="8" placeholder="Ex: 8" type="number" id="input_evaporadores">
-                    </div>
-                    <div class="field">
-                        <label for="input_sensores">Número de sensores MQ-2 por evaporador</label>
-                        <input value="2" placeholder="Ex: 2" type="number" id="input_sensores">
-                    </div>
-                </div>
-                <button class="primary-button" type="button" onclick="calcularHardware()">Calcular custo do sistema</button>
-            </div>
-            <aside class="calculator-card results-card">
-                <h2>Resultados Estimados de Implementação</h2>
-                <div class="result-list">
-                    <div class="result-item">
-                        <div><small>Quantidade total</small><strong>Sensores necessários</strong></div>
-                        <b id="resultado_sensores">—</b>
-                    </div>
-                    <div class="result-item result-total">
-                        <div><small>Investimento estimado</small><strong>Custo de Implementação</strong></div>
-                        <b id="resultado_hardware">—</b>
-                    </div>
-                </div>
-                <p class="result-note" id="detalhe_hardware">Preencha os dados e calcule o custo estimado do sistema.</p>
-            </aside>
-        </section>
+    </div>
 
-        <section class="calculator-grid" id="painelTrabalhista" hidden>
-            <div class="calculator-card">
-                <h2>Simule o Passivo Trabalhista (NR-15)</h2>
-                <div class="calculator-fields">
-                    <div class="field">
-                        <label for="input_numeroFuncionarios">Número de funcionários expostos na sala de desossa</label>
-                        <input value="300" placeholder="Ex: 300" type="number" id="input_numeroFuncionarios">
-                    </div>
-                    <div class="field">
-                        <label for="input_mesesExpo">Há quantos meses ocorre a exposição sem monitoramento?</label>
-                        <input value="20" placeholder="Ex: 18" type="number" id="input_mesesExpo">
-                        <small>A legislação permite cobrança retroativa de no máximo 5 anos (60 meses).</small>
-                    </div>
-                </div>
-                <button class="primary-button" type="button" onclick="calcularTrabalhista()">Calcular passivo trabalhista</button>
-            </div>
-            <aside class="calculator-card results-card">
-                <h2>Resultados Estimados do Passivo</h2>
-                <div class="result-list">
-                    <div class="result-item">
-                        <div><small>Valor estimado</small><strong>Adicional de Insalubridade</strong></div>
-                        <b id="resultado_insalubridade">—</b>
-                    </div>
-                    <div class="result-item result-total">
-                        <div><small>Com reflexos</small><strong>Passivo Trabalhista Total</strong></div>
-                        <b id="resultado_passivo">—</b>
-                    </div>
-                </div>
-                <p class="result-note">Estimativa considerando o teto legal de 60 meses.</p>
-            </aside>
-        </section>
-    </main>
+    <hr>
 
-<script>
+    <div>
+        <h2>2. Passivo Trabalhista Oculto (NR-15)</h2>
+        <span>
+            <i>Estime o valor do adicional de insalubridade devido aos funcionários expostos à amônia sem monitoramento.</i>
+        </span><br><br>
 
-    let custoSensor = 96;
-    let custoInstalacao = 120;
+        <label for="input_numeroFuncionarios">Número de funcionários expostos na sala de desossa:</label> <br>
+        <input value="300" placeholder="Ex: 300" type="number" id="input_numeroFuncionarios"><br><br>
 
-    function mostrarParalisacoes() {
-        painelParalisacoes.hidden = false;
-        painelImplementacao.hidden = true;
-        painelTrabalhista.hidden = true;
+        <label for="input_mesesExpo">Há quantos meses essa exposição ocorre sem monitoramento?</label> <br>
+        <input value="20" placeholder="Ex: 18" type="number" id="input_mesesExpo"><br>
+        <span class="subtitulo"><i>*A legislação permite cobrança retroativa de no máximo 5 anos (60 meses).</i></span><br><br>
 
-        botaoParalisacoes.className = "calculator-tab active";
-        botaoImplementacao.className = "calculator-tab";
-        botaoTrabalhista.className = "calculator-tab";
-    }
+        <button onclick="calcularTrabalhista()" class="btn-calcular">Calcular Passivo Trabalhista</button><br><br>
 
-    function mostrarImplementacao() {
-        painelParalisacoes.hidden = true;
-        painelImplementacao.hidden = false;
-        painelTrabalhista.hidden = true;
+        <div id="div_msgTrabalhista"></div>
+        <h2>3. Custo de Implantação (AmoniaSense)</h2>
+        <span>
+            <i>Estime o investimento necessário para instalar o sistema de monitoramento na sala de desossa.</i>
+        </span><br><br>
 
-        botaoParalisacoes.className = "calculator-tab";
-        botaoImplementacao.className = "calculator-tab active";
-        botaoTrabalhista.className = "calculator-tab";
-    }
+        <label for="input_evaporadores">Número de evaporadores na sala de desossa:</label> <br>
+        <input value="8" placeholder="Ex: 8" type="number" id="input_evaporadores"><br><br>
 
-    function mostrarTrabalhista() {
-        painelParalisacoes.hidden = true;
-        painelImplementacao.hidden = true;
-        painelTrabalhista.hidden = false;
+        <label for="input_sensores">Número de sensores MQ-2 por evaporador:</label> <br>
+        <input value="2" placeholder="Ex: 2" type="number" id="input_sensores"><br><br>
 
-        botaoParalisacoes.className = "calculator-tab";
-        botaoImplementacao.className = "calculator-tab";
-        botaoTrabalhista.className = "calculator-tab active";
-    }
+        <button onclick="calcularHardware()" class="btn-calcular">Calcular Custo do Sistema</button><br><br>
 
-    function calcularHardware(){
-        let evaporadores = Number(input_evaporadores.value);
-        let sensores = Number(input_sensores.value);
-        
-        let totalSensores = evaporadores * sensores;
-        let custoPorSensor = custoSensor + custoInstalacao;
-        let custoTotal = totalSensores * custoPorSensor;
+        <div id="div_msgHardware"></div>
+    </div>
 
-        resultado_sensores.innerHTML = totalSensores;
-        resultado_hardware.innerHTML = "R$ " + custoTotal.toFixed(2);
-
-        detalhe_hardware.innerHTML = "Arduino: R$ " + (custoTotal * 0.25).toFixed(2)
-            + " | Sensor: R$ " + (custoTotal * 0.10).toFixed(2)
-            + " | Proto-Board: R$ " + (custoTotal * 0.05).toFixed(2)
-            + " | Instalação: R$ " + (custoTotal * 0.6).toFixed(2);
-    }
-
-    function calcularTrabalhista(){
-        let numeroFuncionarios = Number(input_numeroFuncionarios.value);
-        let mesesExpo = Number(input_mesesExpo.value);
-
-        if (mesesExpo > 60){
-            mesesExpo = 60;
-        }
-
-        let valor = numeroFuncionarios * 324.2 * mesesExpo;
-        let valorComReflexos = valor * 1.27;
-
-        resultado_insalubridade.innerHTML = "R$ " + valor.toFixed(2);
-        resultado_passivo.innerHTML = "R$ " + valorComReflexos.toFixed(2);
-    }
-
-    let tipoTempo = 'padrao';
-
-    function exibirHora(){
-        tempo_label.innerHTML = "Tempo de paralisação causado pelo vazamento (horas):";
-        tipoTempo = 'hora'; 
-    }
-    
-    function exibirMinutos(){
-        tempo_label.innerHTML = "Tempo de paralisação causado pelo vazamento (minutos):";
-        tipoTempo = 'minuto'; 
-    }
-
-    function calcularIncidente() {
-        let capacidadeDiaria = Number(input_capacidade.value);
-        let horasFuncionamento = Number(input_funcionamento.value);
-        let pesoCarcaca = 267.3;
-        let custoPorKg = Number(input_custokg.value);
-        let Funcionarios = Number(ipt_Funcionarios.value);
-        let HoraFuncionario = Number(ipt_HoraFuncionario.value);
-        
-        let tempoParado = Number(input_tempo.value);
-        let minutosParado = tempoParado;
-
-        if (tipoTempo === 'hora') {
-            minutosParado = tempoParado * 60;
-        }
-
-        let bovinosPorHora = capacidadeDiaria / horasFuncionamento;
-        let kgDeCarnePorHora = bovinosPorHora * pesoCarcaca;
-        let kgDeCarnePorMinuto = kgDeCarnePorHora / 60;
-
-        let kgDeCarneContaminada = kgDeCarnePorMinuto * minutosParado;
-        let prejuizoCarneContaminada = kgDeCarneContaminada * custoPorKg;
-
-        let valorMinutoFuncionario = HoraFuncionario / 60;
-        let PrejuizoMaoDeObra = Funcionarios * valorMinutoFuncionario * minutosParado;
-
-        let prejuizoTotal = prejuizoCarneContaminada + PrejuizoMaoDeObra;
-        
-        resultado_carne.innerHTML = kgDeCarneContaminada.toFixed(2) + " kg";
-        resultado_mercadoria.innerHTML = "R$ " + prejuizoCarneContaminada.toFixed(2);
-        resultado_mao_obra.innerHTML = "R$ " + PrejuizoMaoDeObra.toFixed(2);
-        resultado_total.innerHTML = "R$ " + prejuizoTotal.toFixed(2);
-    }
-
-    calcularIncidente();
-</script>
 </body>
 </html>
