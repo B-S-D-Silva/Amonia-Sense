@@ -5,42 +5,233 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nova Conta</title>
-    <link rel="stylesheet" href="css/style-pagina-login.css">
+    <link rel="stylesheet" href="./css/style-login-e-cadastro.css">
+
+    <style>
+        .login_body {
+            display: flex !important;
+            flex-direction: column !important;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .login_box {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 0;
+        }
+
+       footer {
+            background-color: #1A2A3A;
+            color: #FFFFFF;
+            padding: 35px 5% 15px;
+        }
+
+        .footer-conteudo {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .footer-conteudo div {
+            width: 25%;
+        }
+
+        .footer-conteudo h3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .footer-conteudo p {
+            font-size: 12px;
+            color: #BDB8AD;
+            line-height: 1.7;
+        }
+
+        .copyright {
+            border-top: 1px solid #304455;
+            margin-top: 25px;
+            padding-top: 12px;
+            font-size: 10px;
+            color: #aaa;
+        }
+        .footer-conteudo {
+            display: flex;
+            justify-content: space-between;
+            text-align: left;
+        }
+
+        .coluna-logo {
+            width: 35%;
+        }
+
+        .colunas-direita {
+            display: flex;
+            gap: 80px; 
+        }
+
+        .colunas-direita div {
+            width: auto;
+        }
+    </style>
 </head>
 
 <body class="login_body">
 
     <div class="fundoLoginECadastro"></div>
 
-    <header>
-        <div class="header">
-
-            <div class="logo">
-                <a href="">
-                    <img onclick="window.location.href='index.html'" src="img/logo-amonia.png">
-                </a>
+    <header class="topbar">
+        <div class="nav-shell">
+            <div class="brand" onclick="window.location.href='./index.html'">
+                <img class="brand-logo" src="./img/logo-transparente.png" alt="AmoniaSense">
             </div>
-
-            <div class="botoes">
-                <button class="nav_botao"
-                    onclick="window.location.href='index.html'">
-                    Página inicial
-                </button>
-            </div>
-
+            <nav class="nav-links">
+                <a href="./index.html">Home</a>
+                <a href="./pagina-login.html">Login</a>
+                <a href="./pagina-cadastro.html">Cadastro</a>
+            </nav>
         </div>
     </header>
-
-
+    
     <div class="login_box">
-
         <div class="login_container" id="login_container"></div>
+    </div>
+
+<footer>
+    <div class="footer-conteudo">
+        
+        <div class="coluna-logo">
+            <div class="brand">
+                <img class="brand-logo" src="./img/logo-transparente.png" alt="AmoniaSense">
+            </div>
+            <p>Segurança do trabalho e eficiência operacional por meio do monitoramento contínuo de gases refrigerantes no setor frigorífico.</p>
+        </div>
+
+        <div class="colunas-direita">
+            <div>
+                <h3>NAVEGAÇÃO</h3>
+                <p>Tecnologia</p>
+                <p>Simulador Financeiro</p>
+                <p>Nossa Equipe</p>
+            </div>
+
+            <div>
+                <h3>SUPORTE</h3>
+                <p>Documentação Técnica</p>
+                <p>suporte@amoniasense.com.br</p>
+                <p>+55 (11) 98765-4321</p>
+            </div>
+        </div>
 
     </div>
 
+    <div class="copyright">
+        <span class="texto-copy">© 2026 AmoniaSense Systems. Todos os direitos reservados.</span>
+        <span class="texto-normas">Desenvolvido sob normas NR-36 e NR-15.</span>
+    </div>
+</footer>
 
-    <script src="js/cadastro.js"></script>
+
+
+    <script>
+        let container = `
+            <h1 style="
+                text-align: center;
+                font-size: 35px;
+                margin: 5px 0;
+                color: #1f2937;
+            ">
+                Nova Conta
+            </h1>
+
+            <p style="
+                text-align: center;
+                font-size: 15px;
+                color: #77736e;
+                margin: 0 0 20px 0;
+            ">
+                Cadastre seu perfil
+            </p>
+
+            <h2>EMAIL</h2>
+            <input type="text" placeholder="Digite seu email" id="input_cadastro">
+
+            <h2>DATA DE NASCIMENTO</h2>
+            <input type="date" id="input_nascimento">
+
+            <h2>CPF OU NÚMERO DO PASSAPORTE</h2>
+            <input type="text" placeholder="Digite seu CPF ou passaporte" id="input_documento">
+
+            <h2>SENHA</h2>
+            <input type="password" placeholder="Crie uma senha forte" id="input_criesenha">
+
+            <h2>CONFIRMAR SENHA</h2>
+            <input type="password" placeholder="Repita a senha criada" id="input_repita">
+
+            <button class="btn_entrar" onclick="Criar()">
+                CADASTRAR
+            </button>
+
+            <div id="div_mensagem"></div>
+
+            <p style="
+                text-align: center;
+                font-size: 11px;
+                color: #77736e;
+                margin-top: 12px;
+            ">
+                Já possui uma conta?
+                <a href="./pagina-login.html" style="color: #477ca5; font-weight: bold;">
+                    Fazer login
+                </a>
+            </p>
+        `;
+
+        login_container.innerHTML = container;
+
+        function irLogin() {
+            window.location.href = "./pagina-login.html";
+        }
+
+        function Criar() {
+            let email = input_cadastro.value;
+            let dataNascimento = input_nascimento.value;
+            let documento = input_documento.value;
+            let senha = input_criesenha.value;
+            let repita = input_repita.value;
+
+            if (email == '') {
+                div_mensagem.innerHTML = `<b style="color: red;">Insira um email</b>`;
+            } else if (dataNascimento == '') {
+                div_mensagem.innerHTML = `<b style="color: red;">Insira sua data de nascimento</b>`;
+            } else if (documento == '') {
+                div_mensagem.innerHTML = `<b style="color: red;">Insira seu CPF ou passaporte</b>`;
+            } else if (senha == '') {
+                div_mensagem.innerHTML = `<b style="color: red;">Insira uma senha</b>`;
+            } else if (senha == senha.toLowerCase()) {
+                div_mensagem.innerHTML = `<b style="color: red;">A senha deve conter letters maiusculas</b>`;
+            } else if (senha == senha.toUpperCase()) {
+                div_mensagem.innerHTML = `<b style="color: red;">A senha deve conter letras minusculas</b>`;
+            } else if (senha.length < 8) {
+                div_mensagem.innerHTML = `<b style="color: red;">A senha deve conter mais de 7 caracteres</b>`;
+            } else if (repita != senha) {
+                div_mensagem.innerHTML = `<b style="color: red;">Senha não está igual</b> `;
+            } else if (!email.endsWith('.com') && !email.includes('@')) {
+                div_mensagem.innerHTML = `<b style="color: red;">Insira um email válido</b>`;
+            } else {
+                container = `
+                    <p style="text-align: center; color: #1f2937; font-size: 14px;">
+                        Seu usuário foi criado ✅
+                    </p>
+                    <button class="btn_entrar" onclick="irLogin()">
+                        IR PARA LOGIN
+                    </button>
+                `;
+                login_container.innerHTML = container;
+            }
+        }
+    </script>
 
 </body>
-
 </html>
