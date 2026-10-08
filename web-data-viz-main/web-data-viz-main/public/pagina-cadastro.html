@@ -6,75 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nova Conta</title>
     <link rel="stylesheet" href="./css/style-login-e-cadastro.css">
-
-    <style>
-        .login_body {
-            display: flex !important;
-            flex-direction: column !important;
-            min-height: 100vh;
-            margin: 0;
-        }
-
-        .login_box {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 0;
-        }
-
-       footer {
-            background-color: #1A2A3A;
-            color: #FFFFFF;
-            padding: 35px 5% 15px;
-        }
-
-        .footer-conteudo {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .footer-conteudo div {
-            width: 25%;
-        }
-
-        .footer-conteudo h3 {
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .footer-conteudo p {
-            font-size: 12px;
-            color: #BDB8AD;
-            line-height: 1.7;
-        }
-
-        .copyright {
-            border-top: 1px solid #304455;
-            margin-top: 25px;
-            padding-top: 12px;
-            font-size: 10px;
-            color: #aaa;
-        }
-        .footer-conteudo {
-            display: flex;
-            justify-content: space-between;
-            text-align: left;
-        }
-
-        .coluna-logo {
-            width: 35%;
-        }
-
-        .colunas-direita {
-            display: flex;
-            gap: 80px; 
-        }
-
-        .colunas-direita div {
-            width: auto;
-        }
-    </style>
 </head>
 
 <body class="login_body">
@@ -84,7 +15,7 @@
     <header class="topbar">
         <div class="nav-shell">
             <div class="brand" onclick="window.location.href='./index.html'">
-                <img class="brand-logo" src="./img/logo-transparente.png" alt="AmoniaSense">
+                <img class="brand-logo" src="./assets/img/logo-transparente.png" alt="AmoniaSense">
             </div>
             <nav class="nav-links">
                 <a href="./index.html">Home</a>
@@ -103,7 +34,7 @@
         
         <div class="coluna-logo">
             <div class="brand">
-                <img class="brand-logo" src="./img/logo-transparente.png" alt="AmoniaSense">
+                <img class="brand-logo" src="./assets/img/logo-transparente.png" alt="AmoniaSense">
             </div>
             <p>Segurança do trabalho e eficiência operacional por meio do monitoramento contínuo de gases refrigerantes no setor frigorífico.</p>
         </div>
@@ -136,21 +67,11 @@
 
     <script>
         let container = `
-            <h1 style="
-                text-align: center;
-                font-size: 35px;
-                margin: 5px 0;
-                color: #1f2937;
-            ">
+            <h1 class="titulo-cadastro">
                 Nova Conta
             </h1>
 
-            <p style="
-                text-align: center;
-                font-size: 15px;
-                color: #77736e;
-                margin: 0 0 20px 0;
-            ">
+            <p class="subtitulo-cadastro">
                 Cadastre seu perfil
             </p>
 
@@ -175,14 +96,9 @@
 
             <div id="div_mensagem"></div>
 
-            <p style="
-                text-align: center;
-                font-size: 11px;
-                color: #77736e;
-                margin-top: 12px;
-            ">
+            <p class="texto-login">
                 Já possui uma conta?
-                <a href="./pagina-login.html" style="color: #477ca5; font-weight: bold;">
+                <a class="link-login" href="./pagina-login.html">
                     Fazer login
                 </a>
             </p>
@@ -202,26 +118,26 @@
             let repita = input_repita.value;
 
             if (email == '') {
-                div_mensagem.innerHTML = `<b style="color: red;">Insira um email</b>`;
+                div_mensagem.innerHTML = `<b>Insira um email</b>`;
             } else if (dataNascimento == '') {
-                div_mensagem.innerHTML = `<b style="color: red;">Insira sua data de nascimento</b>`;
+                div_mensagem.innerHTML = `<b>Insira sua data de nascimento</b>`;
             } else if (documento == '') {
-                div_mensagem.innerHTML = `<b style="color: red;">Insira seu CPF ou passaporte</b>`;
+                div_mensagem.innerHTML = `<b>Insira seu CPF ou passaporte</b>`;
             } else if (senha == '') {
-                div_mensagem.innerHTML = `<b style="color: red;">Insira uma senha</b>`;
+                div_mensagem.innerHTML = `<b>Insira uma senha</b>`;
             } else if (senha == senha.toLowerCase()) {
-                div_mensagem.innerHTML = `<b style="color: red;">A senha deve conter letters maiusculas</b>`;
+                div_mensagem.innerHTML = `<b>A senha deve conter letters maiusculas</b>`;
             } else if (senha == senha.toUpperCase()) {
-                div_mensagem.innerHTML = `<b style="color: red;">A senha deve conter letras minusculas</b>`;
+                div_mensagem.innerHTML = `<b>A senha deve conter letras minusculas</b>`;
             } else if (senha.length < 8) {
-                div_mensagem.innerHTML = `<b style="color: red;">A senha deve conter mais de 7 caracteres</b>`;
+                div_mensagem.innerHTML = `<b>A senha deve conter mais de 7 caracteres</b>`;
             } else if (repita != senha) {
-                div_mensagem.innerHTML = `<b style="color: red;">Senha não está igual</b> `;
+                div_mensagem.innerHTML = `<b>Senha não está igual</b> `;
             } else if (!email.endsWith('.com') && !email.includes('@')) {
-                div_mensagem.innerHTML = `<b style="color: red;">Insira um email válido</b>`;
+                div_mensagem.innerHTML = `<b>Insira um email válido</b>`;
             } else {
                 container = `
-                    <p style="text-align: center; color: #1f2937; font-size: 14px;">
+                    <p class="msg-sucesso">
                         Seu usuário foi criado ✅
                     </p>
                     <button class="btn_entrar" onclick="irLogin()">

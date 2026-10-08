@@ -33,7 +33,7 @@ FROM cliente;
 SELECT nome, TIMESTAMPDIFF(YEAR, dtNasc, NOW()) AS 'IDADE DO USUÁRIO'
 FROM cliente;
 
-SELECT CONCAT('Nome do usuário: ', nome, ' | Email: ', email, ' | Documento: ', IFNULL(Documento, '(Sem Documento cadastrado)'),
+SELECT CONCAT('Nome do usuário: ', nome, ' | Email: ', email, ' | Documento: ', IFNULL(Documento, '(Sem Documento cadastrado)')),
 FROM cliente;
 
 -- =========================================================

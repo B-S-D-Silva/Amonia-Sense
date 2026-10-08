@@ -1,82 +1,322 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AquaTech | Página Inicial</title>
-
-    <script src="./js/sessao.js"></script>
-
-    <link rel="stylesheet" href="./css/estilo.css">
-    <link rel="icon" href="./assets/icon/favicon2.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="./css/style-home.css">
+    <title>AmoniaSense</title>
 </head>
 
 <body>
-    <div class="header">
-      <div class="container">
-        <h1 class="titulo">AquaTech</h1>
-        <ul class="navbar">
-          <li class="agora">
-            <a href="#">Inicial</a>
-          </li>
-          <li>
-            <a href="simulador.html">Simulador</a>
-          </li>
-          <li>|</li>
-          <li>
-            <a href="login.html">Login</a>
-          </li>
-          <li>
-            <a href="cadastro.html">Cadastro</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  
-    <div class="banner">
-      <div class="container">
-        <p>Preservando <span>hoje</span> para existirem <span>amanhã</span>.</p>
-      </div>
-    </div>
-  
-    <div class="social">
-      <div class="container">
-        <div class="boxes">
-          <div class="box">
-            <img src="assets/imgs/planet-earth_color.png">
-            <h4>Missão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-          <div class="box">
-            <img src="assets/imgs/lightbulb_color.png">
-            <h4>Visão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-          <div class="box">
-            <img src="assets/imgs/growth_color.png">
-            <h4>Valores</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
+
+    <!-- MENU -->
+    <header class="topbar">
+        <div class="nav-shell">
+
+            <div class="brand">
+                <img class="brand-logo" src="./assets/img/logo-transparente.png" alt="AmoniaSense">
+            </div>
+
+            <nav class="nav-links">
+                <a href="./index.html">Início</a>
+                <a href="./index.html#solucoes">Soluções</a>
+                <a href="./calculadora.html">Simulador Financeiro</a>
+                <a href="./index.html#tecnologia">Sobre</a>
+                <a href="./index.html#contato">Fale Conosco</a>
+                <a class="botao-login" href="./pagina-login.html">Entrar</a>
+                <a href="./pagina-cadastro.html">Cadastrar-se</a>
+            </nav>
+
         </div>
-      </div>
-    </div>
+    </header>
+
+
+    <!-- BANNER PRINCIPAL -->
+    <section class="imagem">
+
+        <div class="fundoIntro">
+
+            <div class="intro">
+                SISTEMA DE MONITORAMENTO IOT
+            </div>
+
+            <h1>
+                AmoniaSense:<br>
+                Monitoramento Inteligente<br>
+                de Vazamento de Amônia
+            </h1>
+
+            <p class="subtitulo">
+                Detecte variações na concentração de amônia em tempo real e
+                acompanhe os dados pela plataforma web, contribuindo para a
+                segurança dos trabalhadores e a prevenção de vazamentos na
+                sala de desossa.
+            </p>
+
+            <div class="botoes">
+                <a href="#solucoes">CONHEÇA NOSSAS SOLUÇÕES</a>
+                <a href="./calculadora.html">SIMULADOR FINANCEIRO</a>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- APRESENTAÇÃO -->
+    <section class="apresentacao" id="solucoes">
+
+        <h2>
+            Tudo o que o seu frigorífico precisa para<br>
+            a segurança contra vazamentos.
+        </h2>
+
+        <p>
+            Oferecemos um sistema contínuo de monitoramento de gás amônia
+            para salas de desossa, capaz de registrar leituras em tempo real
+            e emitir alertas visuais na interface web para prevenir acidentes
+            e proteger os trabalhadores.
+        </p>
+
+    </section>
+
+
+    <!-- SOLUÇÕES -->
+    <section class="solucoes">
+
+        <h2>
+            Oferecemos as melhores soluções para o seu negócio
+        </h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <img src="./assets/img/imagem1.jpg" alt="">
+
+                <h3>Controle em tempo real.</h3>
+
+                <p>
+                    Acompanhe os dados do sistema em tempo real.
+                </p>
+            </div>
+
+            <div class="card">
+                <img src="./assets/img/imagem2.jpg" alt="">
+
+                <h3>Mais segurança para funcionários.</h3>
+
+                <p>
+                    Identifique situações de risco rapidamente.
+                </p>
+            </div>
+
+            <div class="card">
+                <img src="./assets/img/imagem3.jpg" alt="">
+
+                <h3>Carga de bovinos protegida.</h3>
+
+                <p>
+                    Mais segurança para toda a operação.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DIFERENCIAIS -->
+    <section class="diferenciais">
+
+        <span class="pequeno-titulo">DIFERENCIAIS</span>
+
+        <h2>
+            O software que protege desossas frigoríficas de acidentes.
+        </h2>
+
+        <div class="diferenciais-cards">
+
+            <div>
+                <span class="icone">◉</span>
+                <h3>Instalação de Sensores</h3>
+                <p>
+                    Sensores estrategicamente instalados junto aos
+                    equipamentos da sala de desossa.
+                </p>
+            </div>
+
+            <div>
+                <span class="icone">◉</span>
+                <h3>Alertas Instantâneos</h3>
+                <p>
+                    Alertas automáticos para identificar situações
+                    de risco.
+                </p>
+            </div>
+
+            <div>
+                <span class="icone">◉</span>
+                <h3>Relatórios para Auditorias</h3>
+                <p>
+                    Relatórios completos para acompanhamento
+                    e auditorias.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="tecnologia" id="tecnologia">
+
+        <img src="./assets/img/imagem4.png">
+
+        <div class="texto-tecnologia">
+
+            <span>TECNOLOGIA</span>
+
+            <h2>
+                Monitoramento Inteligente<br>
+                Garantindo a Segurança
+            </h2>
+
+            <p>
+                O sistema monitora continuamente a concentração de amônia,
+                registra as medições em tempo real e apresenta os dados em
+                uma plataforma web, permitindo acompanhar variações e
+                identificar possíveis situações de risco.
+            </p>
+
+            <a href="./calculadora.html">LER MAIS</a>
+
+        </div>
+
+    </section>
+
+
   
-    <div class="footer">
-      <div class="container">
-        <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023</h4>
-        <span class="version">v1.0.0</span>
-      </div>
+    <section class="beneficios">
+
+        <div>
+            <span>◷</span>
+            <p>
+                Medição precisa<br>
+                a cada 2 segundos
+            </p>
+        </div>
+
+        <div>
+            <span>▤</span>
+            <p>
+                Relatórios completos<br>
+                para auditorias
+            </p>
+        </div>
+
+        <div>
+            <span>▱</span>
+            <p>
+                Interface web intuitiva<br>
+                para a gestão
+            </p>
+        </div>
+
+    </section>
+
+
+    <!-- CONTATO -->
+    <section class="contato" id="contato">
+
+        <h2>Entre em contato conosco</h2>
+
+        <div class="formulario">
+
+            <div>
+                <label>Nome*</label>
+                <input type="text" placeholder="Seu nome">
+            </div>
+
+            <div>
+                <label>WhatsApp*</label>
+                <input type="text" placeholder="(11) 99999-0000">
+            </div>
+
+            <div>
+                <label>E-mail*</label>
+                <input type="text" placeholder="seu@email.com">
+            </div>
+
+            <div>
+                <label>Município*</label>
+                <input type="text" placeholder="Cidade">
+            </div>
+
+            <div>
+                <label>UF*</label>
+                <input type="text" placeholder="Estado">
+            </div>
+
+            <div>
+                <label>Mensagem*</label>
+                <input type="text" placeholder="Conte um pouco mais sobre...">
+            </div>
+        </div>
+
+    </section>
+    
+  <section>
+    <div class="ferramentas">
+        <div>Tecnologias e ferramentas utilizadas</div>   
+        
+        <div class="lista-itens">
+            <p>ARDUÍNO UNO R3</p>
+            <p>SENSOR MQ-2</p>
+            <p>MYSQL</p>
+            <p>WEB DASHBOARD</p>
+        </div>
+    </div> 
+  </section>
+
+  <footer>
+    <div class="footer-conteudo">
+        
+        <div class="coluna-logo">
+            <div class="brand">
+                <img class="brand-logo" src="./assets/img/logo-transparente.png" alt="AmoniaSense">
+            </div>
+            <p>Segurança do trabalho e eficiência operacional por meio do monitoramento contínuo de gases refrigerantes no setor frigorífico.</p>
+        </div>
+
+        <div class="colunas-direita">
+            <div>
+                <h3>NAVEGAÇÃO</h3>
+                <p>Tecnologia</p>
+                <p>Simulador Financeiro</p>
+                <p>Nossa Equipe</p>
+            </div>
+
+            <div>
+                <h3>SUPORTE</h3>
+                <p>Documentação Técnica</p>
+                <p>suporte@amoniasense.com.br</p>
+                <p>+55 (11) 98765-4321</p>
+            </div>
+        </div>
+
     </div>
-  </body>
+
+    <div class="copyright">
+        <span class="texto-copy">© 2026 AmoniaSense Systems. Todos os direitos reservados.</span>
+        <span class="texto-normas">Desenvolvido sob normas NR-36 e NR-15.</span>
+    </div>
+</footer>
+
+
+
+
+</body>
 
 </html>
