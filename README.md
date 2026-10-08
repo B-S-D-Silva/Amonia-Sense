@@ -12,10 +12,10 @@ As telas web podem ser abertas individualmente:
 
 | Página | Acesso |
 | --- | --- |
-| Página inicial | [AmoniaSense](https://b-s-d-silva.github.io/Amonia-Sense/projeto/web/index.html) |
-| Simulador financeiro | [Calculadora](https://b-s-d-silva.github.io/Amonia-Sense/projeto/web/calculadora.html) |
-| Login demonstrativo | [Entrar](https://b-s-d-silva.github.io/Amonia-Sense/projeto/web/pagina-login.html) |
-| Cadastro demonstrativo | [Criar conta](https://b-s-d-silva.github.io/Amonia-Sense/projeto/web/pagina-cadastro.html) |
+| Página inicial | [AmoniaSense](https://b-s-d-silva.github.io/Amonia-Sense/web-data-viz-main/web-data-viz-main/public/index.html) |
+| Simulador financeiro | [Calculadora](https://b-s-d-silva.github.io/Amonia-Sense/web-data-viz-main/web-data-viz-main/public/calculadora.html) |
+| Login demonstrativo | [Entrar](https://b-s-d-silva.github.io/Amonia-Sense/web-data-viz-main/web-data-viz-main/public/pagina-login.html) |
+| Cadastro demonstrativo | [Criar conta](https://b-s-d-silva.github.io/Amonia-Sense/web-data-viz-main/web-data-viz-main/public/pagina-cadastro.html) |
 
 A interface estática é publicada pelo GitHub Pages a partir de `projeto/web`. A publicação é automatizada pelo GitHub Actions quando há atualização na branch `main`. As páginas de login e cadastro são apenas demonstrações visuais: não criam contas, não autenticam usuários e não armazenam os dados enviados.
 
