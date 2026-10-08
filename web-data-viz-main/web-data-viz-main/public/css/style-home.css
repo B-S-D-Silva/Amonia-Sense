@@ -75,7 +75,7 @@ body {
 
 .imagem {
     height: 520px;
-    background-image: url("../img/firefly-gemini-flash-editado.png");
+    background-image: url("../assets/img/firefly-gemini-flash-editado.png");
     
     background-size: cover;
     background-position: center;
