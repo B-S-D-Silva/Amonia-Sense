@@ -1,8 +1,6 @@
-<p align="center">
-  <img src="projeto/web/img/logo-amonia.png" alt="Logo AmoniaSense" width="520">
-</p>
+<img width="1024" height="572" alt="imagemgit" src="https://github.com/user-attachments/assets/7620abec-0f9c-42e8-b35f-4c1c2a63e79d" />
 
-# AmoniaSense
+## AmoniaSense
 
 Protótipo acadêmico de Internet das Coisas (IoT) para apoiar o monitoramento de vazamentos de amônia em ambientes de refrigeração industrial de frigoríficos bovinos. A proposta combina sensores, aquisição de dados, armazenamento e visualização para ajudar a identificar situações que exigem atenção.
 
