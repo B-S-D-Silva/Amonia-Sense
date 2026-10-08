@@ -358,7 +358,7 @@ body:has(.calculator-page) .topbar {
 }
 
 .beneficios p {
-    font-size: 9px;
+    font-size: 10px;
     margin-top: 10px;
 }
 
@@ -389,7 +389,7 @@ body:has(.calculator-page) .topbar {
 }
 
 .formulario label {
-    font-size: 8px;
+    font-size: 11px;
     margin-bottom: 4px;
 }
 
@@ -398,7 +398,7 @@ body:has(.calculator-page) .topbar {
     border: 1px solid #8bb5ce;
     border-radius: 4px;
     padding: 5px;
-    font-size: 8px;
+    font-size: 9px;
 }
 
 /* FERRAMENTAS */
