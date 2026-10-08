@@ -219,12 +219,12 @@
         let custoTotal = totalSensores * custoPorSensor;
 
         resultado_sensores.innerHTML = totalSensores;
-        resultado_hardware.innerHTML = "R$ " + custoTotal.toFixed(2);
+        resultado_hardware.innerHTML = custoTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-        detalhe_hardware.innerHTML = "Arduino: R$ " + (custoTotal * 0.25).toFixed(2)
-            + " | Sensor: R$ " + (custoTotal * 0.10).toFixed(2)
-            + " | Proto-Board: R$ " + (custoTotal * 0.05).toFixed(2)
-            + " | Instalação: R$ " + (custoTotal * 0.6).toFixed(2);
+        detalhe_hardware.innerHTML = "Arduino: "+ (custoTotal * 0.25).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            + " | Sensor: " + (custoTotal * 0.10).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            + " | Proto-Board: " + (custoTotal * 0.05).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            + " | Instalação: " + (custoTotal * 0.6).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });;
     }
 
     function calcularTrabalhista(){
@@ -238,8 +238,8 @@
         let valor = numeroFuncionarios * 324.2 * mesesExpo;
         let valorComReflexos = valor * 1.27;
 
-        resultado_insalubridade.innerHTML = "R$ " + valor.toFixed(2);
-        resultado_passivo.innerHTML = "R$ " + valorComReflexos.toFixed(2);
+        resultado_insalubridade.innerHTML =valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        resultado_passivo.innerHTML =valorComReflexos.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     }
 
     let tipoTempo = 'padrao';
@@ -280,11 +280,12 @@
         let PrejuizoMaoDeObra = Funcionarios * valorMinutoFuncionario * minutosParado;
 
         let prejuizoTotal = prejuizoCarneContaminada + PrejuizoMaoDeObra;
-        
-        resultado_carne.innerHTML = kgDeCarneContaminada.toFixed(2) + " kg";
-        resultado_mercadoria.innerHTML = "R$ " + prejuizoCarneContaminada.toFixed(2);
-        resultado_mao_obra.innerHTML = "R$ " + PrejuizoMaoDeObra.toFixed(2);
-        resultado_total.innerHTML = "R$ " + prejuizoTotal.toFixed(2);
+
+        resultado_carne.innerHTML = kgDeCarneContaminada.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " kg";
+        resultado_mercadoria.innerHTML = prejuizoCarneContaminada.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        resultado_mao_obra.innerHTML = PrejuizoMaoDeObra.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        resultado_total.innerHTML = prejuizoTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
     }
 
     calcularIncidente();
