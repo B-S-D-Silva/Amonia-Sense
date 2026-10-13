@@ -71,6 +71,10 @@ const serial = async (
         // armazena os valores dos sensores nos arrays correspondentes
         valoresSensorGas.push(sensorGas);
 
+        while (valoresSensorGas.length > 500) {
+            valoresSensorGas.shift();
+        }
+
         // insere os dados no banco de dados (se habilitado)
         if (HABILITAR_OPERACAO_INSERIR) {
 
@@ -101,6 +105,12 @@ const servidor = (
     app.use((request, response, next) => {
         response.header('Access-Control-Allow-Origin', '*');
         response.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
+        response.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
+
+        if (request.method === 'OPTIONS') {
+            return response.sendStatus(204);
+        }
+
         next();
     });
 
@@ -121,9 +131,13 @@ const servidor = (
     const valoresSensorGas = [];
 
     // inicia a comunicação serial
-    await serial(
-        valoresSensorGas
-    );
+    try {
+        await serial(
+            valoresSensorGas
+        );
+    } catch (erro) {
+        console.error('Não foi possível iniciar a comunicação serial: ', erro);
+    }
 
     // inicia o servidor web
     servidor(
