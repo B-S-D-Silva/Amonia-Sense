@@ -1,26 +1,74 @@
 var alertas = [];
 
-function obterdados(idAquario) {
-    fetch(`/medidas/tempo-real/${idAquario}`)
+var API_SENSOR_GAS = 'http://localhost:3300/sensores/gas';
+
+var leituraGas = { tick: 0, valor: undefined, tamanho: undefined };
+
+function obterCamaras() {
+    if (sessionStorage.CAMARAS) {
+        return JSON.parse(sessionStorage.CAMARAS);
+    }
+
+    return [{ id: 1, descricao: 'Câmara Bovinos 01' }];
+}
+
+function mapearLeituras(bruto, limite) {
+    if (!Array.isArray(bruto) || bruto.length === 0) {
+        return [];
+    }
+
+    var tamanho = bruto.length;
+    var maisNovo = bruto[tamanho - 1];
+
+    if (leituraGas.tick === 0) {
+        leituraGas.tick = tamanho;
+    } else if (maisNovo !== leituraGas.valor || tamanho !== leituraGas.tamanho) {
+        leituraGas.tick++;
+    }
+
+    leituraGas.valor = maisNovo;
+    leituraGas.tamanho = tamanho;
+
+    var inicio = Math.max(0, tamanho - limite);
+    var janela = [];
+
+    for (var i = tamanho - 1; i >= inicio; i--) {
+        janela.push({
+            momento_grafico: String(leituraGas.tick - (tamanho - 1 - i)),
+            valor: bruto[i]
+        });
+    }
+
+    return janela;
+}
+
+function obterdados(idCamara) {
+    fetch(API_SENSOR_GAS)
         .then(resposta => {
             if (resposta.status == 200) {
-                resposta.json().then(resposta => {
+                resposta.json().then(bruto => {
 
-                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    var leituras = mapearLeituras(bruto, 1);
 
-                    alertar(resposta, idAquario);
+                    if (leituras.length === 0) {
+                        return;
+                    }
+
+                    console.log(`Dados recebidos: ${JSON.stringify(leituras)}`);
+
+                    alertar(leituras, idCamara);
                 });
             } else {
-                console.error(`Nenhum dado encontrado para o id ${idAquario} ou erro na API`);
+                console.error(`Nenhum dado encontrado para o id ${idCamara} ou erro na API`);
             }
         })
         .catch(function (error) {
-            console.error(`Erro na obtenção dos dados do aquario p/ gráfico: ${error.message}`);
+            console.error(`Erro na obtenção dos dados da câmara p/ gráfico: ${error.message}`);
         });
 
 }
 
-function alertar(resposta, idAquario) {
+function alertar(resposta, idCamara) {
     var temp = resposta[0].temperatura;
 
     var grauDeAviso = '';
@@ -39,57 +87,59 @@ function alertar(resposta, idAquario) {
         classe_temperatura = 'cor-alerta perigo-quente';
         grauDeAviso = 'perigo quente'
         grauDeAvisoCor = 'cor-alerta perigo-quente'
-        exibirAlerta(temp, idAquario, grauDeAviso, grauDeAvisoCor)
+        exibirAlerta(temp, idCamara, grauDeAviso, grauDeAvisoCor)
     }
     else if (temp < limites.muito_quente && temp >= limites.quente) {
         classe_temperatura = 'cor-alerta alerta-quente';
         grauDeAviso = 'alerta quente'
         grauDeAvisoCor = 'cor-alerta alerta-quente'
-        exibirAlerta(temp, idAquario, grauDeAviso, grauDeAvisoCor)
+        exibirAlerta(temp, idCamara, grauDeAviso, grauDeAvisoCor)
     }
     else if (temp < limites.quente && temp > limites.frio) {
         classe_temperatura = 'cor-alerta ideal';
-        removerAlerta(idAquario);
+        removerAlerta(idCamara);
     }
     else if (temp <= limites.frio && temp > limites.muito_frio) {
         classe_temperatura = 'cor-alerta alerta-frio';
         grauDeAviso = 'alerta frio'
         grauDeAvisoCor = 'cor-alerta alerta-frio'
-        exibirAlerta(temp, idAquario, grauDeAviso, grauDeAvisoCor)
+        exibirAlerta(temp, idCamara, grauDeAviso, grauDeAvisoCor)
     }
     else if (temp <= limites.muito_frio) {
         classe_temperatura = 'cor-alerta perigo-frio';
         grauDeAviso = 'perigo frio'
         grauDeAvisoCor = 'cor-alerta perigo-frio'
-        exibirAlerta(temp, idAquario, grauDeAviso, grauDeAvisoCor)
+        exibirAlerta(temp, idCamara, grauDeAviso, grauDeAvisoCor)
     }
 
     var card;
 
-    if (document.getElementById(`temp_aquario_${idAquario}`) != null) {
-        document.getElementById(`temp_aquario_${idAquario}`).innerHTML = temp + "°C";
-    }
+    if (Number.isFinite(temp)) {
+        if (document.getElementById(`temp_camara_${idCamara}`) != null) {
+            document.getElementById(`temp_camara_${idCamara}`).innerHTML = temp + "°C";
+        }
 
-    if (document.getElementById(`card_${idAquario}`)) {
-        card = document.getElementById(`card_${idAquario}`)
-        card.className = classe_temperatura;
+        if (document.getElementById(`card_${idCamara}`)) {
+            card = document.getElementById(`card_${idCamara}`)
+            card.className = classe_temperatura;
+        }
     }
 }
 
-function exibirAlerta(temp, idAquario, grauDeAviso, grauDeAvisoCor) {
-    var indice = alertas.findIndex(item => item.idAquario == idAquario);
+function exibirAlerta(temp, idCamara, grauDeAviso, grauDeAvisoCor) {
+    var indice = alertas.findIndex(item => item.idCamara == idCamara);
 
     if (indice >= 0) {
-        alertas[indice] = { idAquario, temp, grauDeAviso, grauDeAvisoCor }
+        alertas[indice] = { idCamara, temp, grauDeAviso, grauDeAvisoCor }
     } else {
-        alertas.push({ idAquario, temp, grauDeAviso, grauDeAvisoCor });
+        alertas.push({ idCamara, temp, grauDeAviso, grauDeAvisoCor });
     }
 
     exibirCards();
 }
 
-function removerAlerta(idAquario) {
-    alertas = alertas.filter(item => item.idAquario != idAquario);
+function removerAlerta(idCamara) {
+    alertas = alertas.filter(item => item.idCamara != idCamara);
     exibirCards();
 }
 
@@ -102,9 +152,9 @@ function exibirCards() {
     }
 }
 
-function transformarEmDiv({ idAquario, temp, grauDeAviso, grauDeAvisoCor }) {
+function transformarEmDiv({ idCamara, temp, grauDeAviso, grauDeAvisoCor }) {
 
-    var descricao = JSON.parse(sessionStorage.AQUARIOS).find(item => item.id == idAquario).descricao;
+    var descricao = obterCamaras().find(item => item.id == idCamara).descricao;
     return `
     <div class="mensagem-alarme">
         <div class="informacao">
@@ -118,7 +168,7 @@ function transformarEmDiv({ idAquario, temp, grauDeAviso, grauDeAvisoCor }) {
 }
 
 function atualizacaoPeriodica() {
-    JSON.parse(sessionStorage.AQUARIOS).forEach(item => {
+    obterCamaras().forEach(item => {
         obterdados(item.id)
     });
     setTimeout(atualizacaoPeriodica, 5000);

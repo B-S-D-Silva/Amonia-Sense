@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaTech | Tempo Real</title>
+    <title>AmoniaSense | Tempo Real</title>
 
 
     <link rel="stylesheet" href="./../css/dashboards.css">
@@ -20,20 +20,20 @@
         rel="stylesheet">
 </head>
 
-<body onload="validarSessao(), exibirAquarios(),  atualizacaoPeriodica()">
+<body onload="validarSessao(), exibirCamaras(),  atualizacaoPeriodica()">
 
     <div class="janela">
 
         <div class="header-left dash-header">
 
-            <h1>AquaTech</h1>
+            <h1>AmoniaSense</h1>
 
             <div class="hello">
                 <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
             </div>
 
             <div class="btn-nav">
-                <h3>Aquários</h3>
+                <h3>Câmaras</h3>
             </div>
 
             <div class="btn-nav-white">
@@ -85,7 +85,7 @@
                 </div>
             </div>
 
-            <div class="cards" id="cardAquarios">
+            <div class="cards" id="cardCamaras">
 
             </div>
 
@@ -97,16 +97,16 @@
 
 <script>
 
-    function exibirAquarios() {
-        JSON.parse(sessionStorage.AQUARIOS).forEach(item => {
-            document.getElementById("cardAquarios").innerHTML += `
-                    <div class="card-aquario">
-                        <div class="title-aquario">
+    function exibirCamaras() {
+        obterCamaras().forEach(item => {
+            document.getElementById("cardCamaras").innerHTML += `
+                    <div class="card-camara">
+                        <div class="title-camara">
                             <h1>${item.descricao}</h1>
                         </div>
-                        <div class="desc-aquario">
+                        <div class="desc-camara">
                         <div class="temperatura">
-                            <p id="temp_aquario_${item.id}">-°C</p>
+                            <p id="temp_camara_${item.id}">-°C</p>
                         </div>
                         <div class="cor-alerta" id="card_${item.id}"></div>
                     </div>
