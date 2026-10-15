@@ -17,8 +17,8 @@
 }
 
 html {
-    font-size: 16px;
     scroll-behavior: smooth;
+    scroll-padding-top: 90px;
 }
 
 body {
@@ -30,6 +30,7 @@ body {
 /* A página da calculadora usa fundo cinza (sem precisar mexer no HTML) */
 body:has(.calculator-page) {
     background-color: #f1f1f1;
+    padding-top: 81px;
 }
 
 button,
@@ -44,7 +45,7 @@ a {
    ========================================================== */
 
 .topbar {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -54,7 +55,7 @@ a {
 
 /* Na calculadora o menu fica no fluxo normal da página */
 body:has(.calculator-page) .topbar {
-    position: relative;
+    position: fixed;
     padding: 8px 0;
 }
 
@@ -104,6 +105,7 @@ body:has(.calculator-page) .topbar {
     opacity: 0.7;
 }
 
+
 .botao-login {
     background-color: #FFFFFF;
     color: #1A2A3A !important;
@@ -119,8 +121,8 @@ body:has(.calculator-page) .topbar {
 /* BANNER */
 
 .imagem {
-    height: 520px;
-    background-image: url("../assets/img/firefly-gemini-flash-editado.png");
+    height: 555px;
+    background-image: url("../assets/img/img1.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -134,26 +136,27 @@ body:has(.calculator-page) .topbar {
 
 .intro {
     display: inline-block;
-    padding: 5px 9px;
-    margin-bottom: 15px;
+    padding: 7px 9px;
+    margin-bottom: 20px;
     background-color: #44749D;
     color: #FFFFFF;
-    font-size: 8px;
-    border-radius: 10px;
+    font-size: 10px;
+    border-radius: 15px;
 }
+
 
 .fundoIntro h1 {
     color: #FFFFFF;
-    font-size: 34px;
+    font-size: 40px;
     line-height: 1.1;
     margin-bottom: 15px;
 }
 
 .subtitulo {
     width: 430px;
-    color: #FFFFFF;
+    color: #b7cbdb;
     font-size: 12px;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 .botoes {
@@ -165,8 +168,8 @@ body:has(.calculator-page) .topbar {
 .botoes a {
     background-color: #FFFFFF;
     color: #1A2A3A;
-    padding: 10px 15px;
-    border-radius: 20px;
+    padding: 10px 18px;
+    border-radius: 12px;
     text-decoration: none;
     font-size: 11px;
 }
@@ -180,19 +183,19 @@ body:has(.calculator-page) .topbar {
 
 .apresentacao {
     text-align: center;
-    padding: 70px 20px;
+    padding: 90px 20px;
 }
 
 .apresentacao h2 {
-    font-size: 25px;
-    margin-bottom: 20px;
+    font-size: 30px;
+    margin-bottom: 35px;
 }
 
 .apresentacao p {
     max-width: 700px;
     margin: auto;
     color: #777;
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1.6;
 }
 
@@ -205,7 +208,7 @@ body:has(.calculator-page) .topbar {
 }
 
 .solucoes h2 {
-    font-size: 22px;
+    font-size: 30px;
     margin-bottom: 35px;
 }
 
@@ -215,30 +218,48 @@ body:has(.calculator-page) .topbar {
     gap: 35px;
 }
 
-.card {
-    width: 200px;
-    background-color: #FFFFFF;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px #aaa;
-    text-align: left;
+#card1 {
+    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.8)), url(../assets/img/imagem1.jpg);
+    background-size: cover;
+    background-position: 45%;
 }
 
-.card img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
+#card2 {
+    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.8)), url(../assets/img/imagem2.jpg);
+    background-size: cover;
+    background-position: 45%;
+}
+
+#card3 {
+    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.8)), url(../assets/img/imagem3.jpg);
+    background-size: cover;
+    background-position: 45%;
+}
+
+.card {
+    width: 200px;
+    height: 270px;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px #aaa;
+    padding: 12px 12px 5px;
+    text-align: left;
+    display: flexbox;
+    align-content: end;
 }
 
 .card h3 {
-    font-size: 12px;
-    padding: 12px 12px 5px;
+    font-size: 14px;
+    padding-left: 12px;
+    color: white;
+    font-weight: 500;
 }
 
 .card p {
     font-size: 9px;
-    color: #777;
-    padding: 0 12px 15px;
+    color: #a0a3a7;
+    padding: 12px 12px 15px;
 }
 
 /* DIFERENCIAIS */
@@ -250,26 +271,26 @@ body:has(.calculator-page) .topbar {
 
 .pequeno-titulo {
     color: #2876a9;
-    font-size: 10px;
+    font-size: 13px;
 }
 
 .diferenciais h2 {
-    font-size: 22px;
-    margin: 10px 0 30px;
+    font-size: 30px;
+    margin: 30px 0 30px;
 }
 
 .diferenciais-cards {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 24px;
 }
 
 .diferenciais-cards > div {
     width: 30%;
-    padding: 20px;
+    padding: 40px;
     text-align: left;
     background-color: #f1f1f1;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .icone {
@@ -285,13 +306,13 @@ body:has(.calculator-page) .topbar {
 }
 
 .diferenciais-cards h3 {
-    font-size: 11px;
+    font-size: 20px;
     margin-top: 10px;
 }
 
 .diferenciais-cards p {
     color: #777;
-    font-size: 9px;
+    font-size: 15px;
     margin-top: 7px;
 }
 
