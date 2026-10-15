@@ -75,8 +75,14 @@
                 Cadastre seu perfil
             </p>
 
+            <h2>NOME</h2>
+            <input type="text" placeholder="Digite seu nome" id="input_nome" autocomplete="name">
+
             <h2>EMAIL</h2>
-            <input type="text" placeholder="Digite seu email" id="input_cadastro">
+            <input type="email" placeholder="Digite seu email" id="input_cadastro" autocomplete="email">
+
+            <h2>TELEFONE</h2>
+            <input type="tel" placeholder="Digite seu telefone" id="input_telefone" autocomplete="tel">
 
             <h2>DATA DE NASCIMENTO</h2>
             <input type="date" id="input_nascimento">
@@ -84,17 +90,22 @@
             <h2>CPF OU NÚMERO DO PASSAPORTE</h2>
             <input type="text" placeholder="Digite seu CPF ou passaporte" id="input_documento">
 
+            <h2>EMPRESA</h2>
+            <select id="input_empresa">
+                <option value="">Carregando empresas...</option>
+            </select>
+
             <h2>SENHA</h2>
-            <input type="password" placeholder="Crie uma senha forte" id="input_criesenha">
+            <input type="password" placeholder="Crie uma senha forte" id="input_criesenha" autocomplete="new-password">
 
             <h2>CONFIRMAR SENHA</h2>
-            <input type="password" placeholder="Repita a senha criada" id="input_repita">
+            <input type="password" placeholder="Repita a senha criada" id="input_repita" autocomplete="new-password">
 
-            <button class="btn_entrar" onclick="Criar()">
+            <button class="btn_entrar" id="btn_cadastrar" onclick="Criar()">
                 CADASTRAR
             </button>
 
-            <div id="div_mensagem"></div>
+            <div id="div_mensagem" role="status" aria-live="polite"></div>
 
             <p class="texto-login">
                 Já possui uma conta?
@@ -110,43 +121,97 @@
             window.location.href = "./pagina-login.html";
         }
 
-        function Criar() {
-            let email = input_cadastro.value;
-            let dataNascimento = input_nascimento.value;
-            let documento = input_documento.value;
-            let senha = input_criesenha.value;
-            let repita = input_repita.value;
+        async function Criar() {
+            const nome = document.getElementById("input_nome").value.trim();
+            const email = document.getElementById("input_cadastro").value.trim();
+            const telefone = document.getElementById("input_telefone").value.trim();
+            const dataNascimento = document.getElementById("input_nascimento").value;
+            const documento = document.getElementById("input_documento").value.trim();
+            const empresaId = document.getElementById("input_empresa").value;
+            const senha = document.getElementById("input_criesenha").value;
+            const confirmacaoSenha = document.getElementById("input_repita").value;
+            const mensagem = document.getElementById("div_mensagem");
+            const botaoCadastrar = document.getElementById("btn_cadastrar");
 
-            if (email == '') {
-                div_mensagem.innerHTML = `<b>Insira um email</b>`;
-            } else if (dataNascimento == '') {
-                div_mensagem.innerHTML = `<b>Insira sua data de nascimento</b>`;
-            } else if (documento == '') {
-                div_mensagem.innerHTML = `<b>Insira seu CPF ou passaporte</b>`;
-            } else if (senha == '') {
-                div_mensagem.innerHTML = `<b>Insira uma senha</b>`;
-            } else if (senha == senha.toLowerCase()) {
-                div_mensagem.innerHTML = `<b>A senha deve conter letters maiusculas</b>`;
-            } else if (senha == senha.toUpperCase()) {
-                div_mensagem.innerHTML = `<b>A senha deve conter letras minusculas</b>`;
-            } else if (senha.length < 8) {
-                div_mensagem.innerHTML = `<b>A senha deve conter mais de 7 caracteres</b>`;
-            } else if (repita != senha) {
-                div_mensagem.innerHTML = `<b>Senha não está igual</b> `;
-            } else if (!email.endsWith('.com') && !email.includes('@')) {
-                div_mensagem.innerHTML = `<b>Insira um email válido</b>`;
-            } else {
-                container = `
-                    <p class="msg-sucesso">
-                        Seu usuário foi criado ✅
-                    </p>
-                    <button class="btn_entrar" onclick="irLogin()">
-                        IR PARA LOGIN
-                    </button>
-                `;
-                login_container.innerHTML = container;
+            if (!nome || !email || !telefone || !dataNascimento || !documento || !empresaId || !senha || !confirmacaoSenha) {
+                mensagem.textContent = "Preencha todos os campos.";
+                return;
+            }
+
+            if (!email.includes("@")) {
+                mensagem.textContent = "Informe um e-mail válido.";
+                return;
+            }
+
+            if (senha.length < 8 || senha === senha.toLowerCase() || senha === senha.toUpperCase()) {
+                mensagem.textContent = "A senha deve ter pelo menos 8 caracteres, incluindo letras maiúsculas e minúsculas.";
+                return;
+            }
+
+            if (confirmacaoSenha !== senha) {
+                mensagem.textContent = "As senhas não coincidem.";
+                return;
+            }
+
+            botaoCadastrar.disabled = true;
+            mensagem.textContent = "Salvando cadastro...";
+
+            try {
+                const resposta = await fetch("/usuarios/cadastrar", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        nomeServer: nome,
+                        documentoServer: documento,
+                        telefoneServer: telefone,
+                        emailServer: email,
+                        dtNascServer: dataNascimento,
+                        senhaServer: senha,
+                        idEmpresaVincularServer: empresaId
+                    })
+                });
+
+                if (!resposta.ok) {
+                    const detalhe = await resposta.text();
+                    throw new Error(detalhe || `Não foi possível salvar o cadastro (HTTP ${resposta.status}).`);
+                }
+
+                mensagem.textContent = "Cadastro salvo. Redirecionando para o login...";
+                setTimeout(irLogin, 1500);
+            } catch (erro) {
+                mensagem.textContent = erro.message || "Não foi possível conectar ao servidor.";
+            } finally {
+                botaoCadastrar.disabled = false;
             }
         }
+
+        async function carregarEmpresas() {
+            const seletorEmpresa = document.getElementById("input_empresa");
+            const mensagem = document.getElementById("div_mensagem");
+
+            try {
+                const resposta = await fetch("/empresas/listar");
+                if (!resposta.ok) {
+                    throw new Error(`Não foi possível carregar as empresas (HTTP ${resposta.status}).`);
+                }
+
+                const empresas = await resposta.json();
+                seletorEmpresa.replaceChildren(new Option("Selecione sua empresa", ""));
+
+                empresas.forEach(function (empresa) {
+                    seletorEmpresa.add(new Option(empresa.nome, empresa.id));
+                });
+
+                if (empresas.length === 0) {
+                    mensagem.textContent = "Não há empresas cadastradas para vincular o usuário.";
+                }
+            } catch (erro) {
+                seletorEmpresa.replaceChildren(new Option("Erro ao carregar empresas", ""));
+                mensagem.textContent = erro.message || "Não foi possível carregar as empresas.";
+            }
+        }
+
+        carregarEmpresas();
     </script>
 
 </body>
