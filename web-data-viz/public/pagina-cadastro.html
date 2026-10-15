@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Conta</title>
+    <link rel="stylesheet" href="./css/style-css-geral.css">
+</head>
+
+<body class="login_body">
+
+    <div class="fundoLoginECadastro"></div>
+
+    <header class="topbar">
+        <div class="nav-shell">
+            <div class="brand" onclick="window.location.href='./index.html'">
+                <img class="brand-logo" src="./assets/img/logo-transparente.png" alt="AmoniaSense">
+            </div>
+            <nav class="nav-links">
+                <a href="./index.html">Home</a>
+                <a href="./pagina-login.html">Login</a>
+                <a href="./pagina-cadastro.html">Cadastro</a>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="login_box">
+        <div class="login_container" id="login_container"></div>
+    </div>
+
+<footer>
+    <div class="footer-conteudo">
+        
+        <div class="coluna-logo">
+            <div class="brand">
+                <img class="brand-logo" src="./assets/img/logo-transparente.png" alt="AmoniaSense">
+            </div>
+            <p>Segurança do trabalho e eficiência operacional por meio do monitoramento contínuo de gases refrigerantes no setor frigorífico.</p>
+        </div>
+
+        <div class="colunas-direita">
+            <div>
+                <h3>NAVEGAÇÃO</h3>
+                <p>Tecnologia</p>
+                <p>Simulador Financeiro</p>
+                <p>Nossa Equipe</p>
+            </div>
+
+            <div>
+                <h3>SUPORTE</h3>
+                <p>Documentação Técnica</p>
+                <p>suporte@amoniasense.com.br</p>
+                <p>+55 (11) 98765-4321</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="copyright">
+        <span class="texto-copy">© 2026 AmoniaSense Systems. Todos os direitos reservados.</span>
+        <span class="texto-normas">Desenvolvido sob normas NR-36 e NR-15.</span>
+    </div>
+</footer>
+
+
+
+    <script>
+        let container = `
+            <h1 class="titulo-cadastro">
+                Nova Conta
+            </h1>
+
+            <p class="subtitulo-cadastro">
+                Cadastre seu perfil
+            </p>
+
+            <h2>EMAIL</h2>
+            <input type="text" placeholder="Digite seu email" id="input_cadastro">
+
+            <h2>DATA DE NASCIMENTO</h2>
+            <input type="date" id="input_nascimento">
+
+            <h2>CPF OU NÚMERO DO PASSAPORTE</h2>
+            <input type="text" placeholder="Digite seu CPF ou passaporte" id="input_documento">
+
+            <h2>SENHA</h2>
+            <input type="password" placeholder="Crie uma senha forte" id="input_criesenha">
+
+            <h2>CONFIRMAR SENHA</h2>
+            <input type="password" placeholder="Repita a senha criada" id="input_repita">
+
+            <button class="btn_entrar" onclick="Criar()">
+                CADASTRAR
+            </button>
+
+            <div id="div_mensagem"></div>
+
+            <p class="texto-login">
+                Já possui uma conta?
+                <a class="link-login" href="./pagina-login.html">
+                    Fazer login
+                </a>
+            </p>
+        `;
+
+        login_container.innerHTML = container;
+
+        function irLogin() {
+            window.location.href = "./pagina-login.html";
+        }
+
+        function Criar() {
+            let email = input_cadastro.value;
+            let dataNascimento = input_nascimento.value;
+            let documento = input_documento.value;
+            let senha = input_criesenha.value;
+            let repita = input_repita.value;
+
+            if (email == '') {
+                div_mensagem.innerHTML = `<b>Insira um email</b>`;
+            } else if (dataNascimento == '') {
+                div_mensagem.innerHTML = `<b>Insira sua data de nascimento</b>`;
+            } else if (documento == '') {
+                div_mensagem.innerHTML = `<b>Insira seu CPF ou passaporte</b>`;
+            } else if (senha == '') {
+                div_mensagem.innerHTML = `<b>Insira uma senha</b>`;
+            } else if (senha == senha.toLowerCase()) {
+                div_mensagem.innerHTML = `<b>A senha deve conter letters maiusculas</b>`;
+            } else if (senha == senha.toUpperCase()) {
+                div_mensagem.innerHTML = `<b>A senha deve conter letras minusculas</b>`;
+            } else if (senha.length < 8) {
+                div_mensagem.innerHTML = `<b>A senha deve conter mais de 7 caracteres</b>`;
+            } else if (repita != senha) {
+                div_mensagem.innerHTML = `<b>Senha não está igual</b> `;
+            } else if (!email.endsWith('.com') && !email.includes('@')) {
+                div_mensagem.innerHTML = `<b>Insira um email válido</b>`;
+            } else {
+                container = `
+                    <p class="msg-sucesso">
+                        Seu usuário foi criado ✅
+                    </p>
+                    <button class="btn_entrar" onclick="irLogin()">
+                        IR PARA LOGIN
+                    </button>
+                `;
+                login_container.innerHTML = container;
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entre</title>
+    <link rel="stylesheet" href="./css/style-css-geral.css">
+</head>
+
+<body class="login_body">
+    <div class="fundoLoginECadastro"></div>
+    <header class="topbar">
+        <div class="nav-shell">
+            <div class="brand" onclick="window.location.href='./index.html'">
+
+                <img class="brand-logo" src="./assets/img/logo-transparente.png" alt="AmoniaSense">
+            </div>
+            <nav class="nav-links">
+                <a href="./index.html">Home</a>
+                <a href="./pagina-login.html">Login</a>
+                <a href="./pagina-cadastro.html">Cadastro</a>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="login_box">
+        <div class="login_container">
+            <h1>Acesse amonia sense</h1>
+            <p>Entre com sua conta</p>
+            <h2>Email</h2>
+            <input type="email" placeholder="E-mail" id="input_login" autocomplete="username">
+            <input type="password" placeholder="Senha" id="input_senha" autocomplete="current-password">
+            <button class="btn_entrar" id="btn_entrar" type="button" onclick="Entrar()">Entrar</button>
+            <button class="btn_cadastro" onclick="window.location.href='./pagina-cadastro.html'">Criar conta</button>
+            <div id="div_mensagem" role="status" aria-live="polite"></div>
+        </div>
+    </div>
+
+    <footer>
+    <div class="footer-conteudo">
+        
+        <div class="coluna-logo">
+            <div class="brand">
+                <img class="brand-logo" src="./assets/img/logo-transparente.png" alt="AmoniaSense">
+            </div>
+            <p>Segurança do trabalho e eficiência operacional por meio do monitoramento contínuo de gases refrigerantes no setor frigorífico.</p>
+        </div>
+
+        <div class="colunas-direita">
+            <div>
+                <h3>NAVEGAÇÃO</h3>
+                <p>Tecnologia</p>
+                <p>Simulador Financeiro</p>
+                <p>Nossa Equipe</p>
+            </div>
+
+            <div>
+                <h3>SUPORTE</h3>
+                <p>Documentação Técnica</p>
+                <p>suporte@amoniasense.com.br</p>
+                <p>+55 (11) 98765-4321</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="copyright">
+        <span class="texto-copy">© 2026 AmoniaSense Systems. Todos os direitos reservados.</span>
+        <span class="texto-normas">Desenvolvido sob normas NR-36 e NR-15.</span>
+    </div>
+</footer>
+
+
+
+    <script>
+        async function Entrar() {
+            const login = document.getElementById("input_login").value.trim();
+            const senha = document.getElementById("input_senha").value;
+            const mensagem = document.getElementById("div_mensagem");
+            const botaoEntrar = document.getElementById("btn_entrar");
+
+            if (!login || !senha) {
+                mensagem.textContent = "Informe seu e-mail e sua senha.";
+                return;
+            }
+
+            botaoEntrar.disabled = true;
+            mensagem.textContent = "Conectando...";
+
+            try {
+                const resposta = await fetch("/usuarios/autenticar", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        emailServer: login,
+                        senhaServer: senha
+                    })
+                });
+
+                if (!resposta.ok) {
+                    const detalhe = await resposta.text();
+                    throw new Error(detalhe || `Falha no login (HTTP ${resposta.status}).`);
+                }
+
+                const usuario = await resposta.json();
+                sessionStorage.setItem("EMAIL_USUARIO", usuario.email);
+                sessionStorage.setItem("NOME_USUARIO", usuario.nome);
+                sessionStorage.setItem("ID_USUARIO", usuario.id);
+                sessionStorage.setItem("AQUARIOS", JSON.stringify(usuario.aquarios || []));
+                window.location.assign("./dashboard/dashboard.html");
+            } catch (erro) {
+                mensagem.textContent = erro.message || "Não foi possível conectar ao servidor.";
+            } finally {
+                botaoEntrar.disabled = false;
+            }
+        }
+    </script>
+
+</body>
+</html>

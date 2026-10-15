@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS amonia_sense;
 CREATE DATABASE amonia_sense;
 USE amonia_sense;
 
