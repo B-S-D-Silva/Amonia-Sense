@@ -15,6 +15,21 @@ body {
     font-family: Arial, sans-serif;
 }
 
+.dashboard-page {
+    display: flex;
+    flex-direction: column;
+    padding-top: 86px;
+}
+
+.dashboard-page footer a {
+    color: #BDB8AD;
+    text-decoration: none;
+}
+
+.dashboard-page footer a:hover {
+    color: #FFFFFF;
+}
+
 .ativo::before {
     width: 8px;
     height: 8px;
@@ -73,6 +88,14 @@ main {
 .card {
     min-height: 205px;
     padding: 20px;
+}
+
+.dashboard-page .card {
+    width: auto;
+    height: auto;
+    overflow: visible;
+    display: block;
+    align-content: initial;
 }
 
 .card-top,
