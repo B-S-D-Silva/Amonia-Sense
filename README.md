@@ -12,11 +12,11 @@ As telas web podem ser abertas individualmente:
 
 | Página | Acesso |
 | --- | --- |
-| Página inicial | [AmoniaSense](https://b-s-d-silva.github.io/Amonia-Sense/web-data-viz/public/index.html) |
-| Simulador financeiro | [Calculadora](https://b-s-d-silva.github.io/Amonia-Sense/web-data-viz/public/calculadora.html) |
-| Login demonstrativo | [Entrar](https://b-s-d-silva.github.io/Amonia-Sense/web-data-viz/public/pagina-login.html) |
-| Cadastro demonstrativo | [Criar conta](https://b-s-d-silva.github.io/Amonia-Sense/web-data-viz/public/pagina-cadastro.html) |
-| Dashboard | [Métricas](https://b-s-d-silva.github.io/Amonia-Sense/web-data-viz/public/dashboard/dashboard.html) |
+| Página inicial | [AmoniaSense](https://b-s-d-silva.github.io/amonia-sense/web-data-viz/public/index.html) |
+| Simulador financeiro | [Calculadora](https://b-s-d-silva.github.io/amonia-sense/web-data-viz/public/calculadora.html) |
+| Login demonstrativo | [Entrar](https://b-s-d-silva.github.io/amonia-sense/web-data-viz/public/pagina-login.html) |
+| Cadastro demonstrativo | [Criar conta](https://b-s-d-silva.github.io/amonia-sense/web-data-viz/public/pagina-cadastro.html) |
+| Dashboard | [Métricas](https://b-s-d-silva.github.io/amonia-sense/web-data-viz/public/dashboard/dashboard.html) |
 
 A interface estática é publicada pelo GitHub Pages a partir de `projeto/web`. A publicação é automatizada pelo GitHub Actions quando há atualização na branch `main`. As páginas de login e cadastro são apenas demonstrações visuais: não criam contas, não autenticam usuários e não armazenam os dados enviados.
 
