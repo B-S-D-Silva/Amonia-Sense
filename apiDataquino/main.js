@@ -2,10 +2,11 @@
 const { SerialPort, ReadlineParser } = require('serialport');
 const express = require('express');
 const mysql = require('mysql2');
+const path = require('path');
 
 // constantes para configurações
 const SERIAL_BAUD_RATE = 9600;
-const SERVIDOR_PORTA = 3300;
+const SERVIDOR_PORTA = Number(process.env.PORT) || 3300;
 const PORTA_SERIAL_PADRAO = process.env.ARDUINO_PORT || process.argv[2] || null;
 
 // habilita ou desabilita a inserção de dados no banco de dados
@@ -100,6 +101,7 @@ const servidor = (
     valoresSensorGas
 ) => {
     const app = express();
+    const cssDiretorio = path.resolve(__dirname, '..', 'web-data-viz', 'public', 'css');
 
     // configurações de requisição e resposta
     app.use((request, response, next) => {
@@ -113,6 +115,12 @@ const servidor = (
 
         next();
     });
+
+    app.get('/', (_, response) => {
+        return response.sendFile(path.join(__dirname, 'index.html'));
+    });
+
+    app.use('/css', express.static(cssDiretorio));
 
     // inicia o servidor na porta especificada
     app.listen(SERVIDOR_PORTA, () => {

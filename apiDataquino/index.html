@@ -9,7 +9,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <link rel="stylesheet" href="../../projeto/web/css/styleDash.css">
+    <link rel="stylesheet" href="/css/styleDash.css">
 </head>
 
 <body>
@@ -402,7 +402,7 @@
 
         function obterDados(grafico, endpoint) {
 
-            fetch('http://localhost:3300/sensores/' + endpoint)
+            fetch('/sensores/' + endpoint)
 
                 .then(function(response) {
                     if (!response.ok) {
