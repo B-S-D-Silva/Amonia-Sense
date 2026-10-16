@@ -29,6 +29,8 @@ npm start
 
 _O comando acima irá iniciar sua API e efetuar os comandos de acordo com a sua parametrização feita nos passos anteriores._
 
-5. Para "ver" sua API funcionando você pode visualizar os gráficos das capturas sendo exibidos no seu navegador pelo caminho **http://localhost:3300** ou efetuando SELECT no seu Banco de Dados, caso tenha optado por inseri-los.
+5. Para visualizar o painel, inicie a API com `npm start` e abra **http://localhost:3300**. Os dados também estão disponíveis no endpoint **http://localhost:3300/sensores/gas**. O painel depende do Arduino estar conectado e enviando leituras; sem ele, o endpoint retorna uma lista vazia. A folha de estilos do painel é carregada de `web-data-viz/public/css/styleDash.css`, então mantenha essa pasta ao lado de `apiDataquino`.
+
+Se a porta 3300 já estiver em uso, encerre a outra aplicação que a está usando ou, no PowerShell, execute `$env:PORT=3301` antes de `npm start` e abra **http://localhost:3301**.
 
 6. Caso queira parar a API, tecle **CTRL+C** no terminal em que a API está rodando.
