@@ -320,7 +320,7 @@ body:has(.calculator-page) .topbar {
 
 .tecnologia {
     background-color: #f1f1f1;
-    padding: 70px 4%;
+    padding: 100px 4%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -350,18 +350,19 @@ body:has(.calculator-page) .topbar {
 
 .texto-tecnologia p {
     color: #777;
-    font-size: 10px;
+    font-size: 12px;
     line-height: 1.5;
 }
 
 .texto-tecnologia a {
     display: inline-block;
     margin-top: 15px;
-    padding: 8px 15px;
+    padding: 8px 20px;
     background-color: #44749D;
     color: #FFFFFF;
     text-decoration: none;
-    font-size: 8px;
+    font-size: 9px;
+    border-radius: 8px;
 }
 
 /* BENEFÍCIOS */
