@@ -329,9 +329,9 @@ body:has(.calculator-page) .topbar {
 
 .tecnologia img {
     width: 40%;
-    height: 190px;
+    height: 300px;
     object-fit: cover;
-    border-radius: 7px;
+    border-radius: 10px;
 }
 
 .texto-tecnologia {
@@ -340,11 +340,11 @@ body:has(.calculator-page) .topbar {
 
 .texto-tecnologia span {
     color: #2876a9;
-    font-size: 10px;
+    font-size: 13px;
 }
 
 .texto-tecnologia h2 {
-    font-size: 22px;
+    font-size: 33px;
     margin: 8px 0;
 }
 
